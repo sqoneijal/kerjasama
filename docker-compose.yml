@@ -1,0 +1,24 @@
+services:
+   kerjasama-api:
+      container_name: kerjasama-api
+      image: kerjasama-api
+      build:
+         context: ./api
+         dockerfile: ./Dockerfile
+      ports:
+         - 1010:80
+      volumes:
+         - ./api:/var/www/html
+      restart: always
+
+   kerjasama-controlpanel:
+      container_name: kerjasama-controlpanel
+      image: kerjasama-controlpanel
+      build:
+         context: ./controlpanel
+         dockerfile: ./Dockerfile
+      ports:
+         - "1011:3000"
+      environment:
+         - NODE_ENV=production
+      restart: always

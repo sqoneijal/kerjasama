@@ -1,0 +1,7 @@
+.vscode
+api/app/Config/Database.php
+api/vendor
+api/.env
+controlpanel/.next
+controlpanel/node_modules
+controlpanel/.env
