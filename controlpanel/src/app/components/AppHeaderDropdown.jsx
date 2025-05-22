@@ -1,11 +1,15 @@
 import { cilBell, cilCommentSquare, cilCreditCard, cilEnvelopeOpen, cilFile, cilLockLocked, cilSettings, cilTask, cilUser } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CBadge, CDropdown, CDropdownDivider, CDropdownHeader, CDropdownItem, CDropdownMenu, CDropdownToggle } from "@coreui/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
-
 import avatar from "../assets/images/blank-avatar.png";
 
 export default function AppHeaderDropdown() {
+   const handleLogout = async () => {
+      await signOut({ callbackUrl: "https://iam.ar-raniry.ac.id/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://localhost:3000" });
+   };
+
    return (
       <CDropdown variant="nav-item">
          <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
@@ -67,9 +71,9 @@ export default function AppHeaderDropdown() {
                </CBadge>
             </CDropdownItem>
             <CDropdownDivider />
-            <CDropdownItem href="#">
+            <CDropdownItem onClick={handleLogout} style={{ cursor: "pointer" }}>
                <CIcon icon={cilLockLocked} className="me-2" />
-               Lock Account
+               Logout
             </CDropdownItem>
          </CDropdownMenu>
       </CDropdown>
