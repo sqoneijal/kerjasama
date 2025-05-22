@@ -1,8 +1,10 @@
 import { CSpinner } from "@coreui/react";
 import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 import DefaultLayout from "./DefaultLayout";
 import ReduxProvider from "./ReduxProvider";
 
+import "@/app/assets/custom.css";
 import "./scss/style.scss";
 
 export const metadata = {
@@ -14,6 +16,7 @@ export default function RootLayout({ children }) {
    return (
       <html lang="id">
          <body>
+            <Toaster position="top-center" />
             <ReduxProvider>
                <Suspense
                   fallback={

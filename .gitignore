@@ -5,3 +5,5 @@ api/.env
 controlpanel/.next
 controlpanel/node_modules
 controlpanel/.env
+/controlpanel/public/tinymce/
+api/writable/google-service.json

@@ -1,12 +1,12 @@
 "use client";
 
+import { setSidebarShow, setUnfoldable } from "@/app/store";
 import CIcon from "@coreui/icons-react";
 import { CCloseButton, CSidebar, CSidebarBrand, CSidebarFooter, CSidebarHeader, CSidebarToggler } from "@coreui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { logo } from "../assets/brand/logo";
 import { sygnet } from "../assets/brand/sygnet";
 import AppSidebarNav from "../components/AppSidebarNav";
-import { setSidebarShow, setUnfoldable } from "../store";
 
 import navigation from "../_nav";
 

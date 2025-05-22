@@ -7,7 +7,10 @@ export const store = createSlice({
       theme: "light",
       unfoldable: false,
       init: {},
-      module: {},
+      module: {
+         pageType: "",
+         pageButton: {},
+      },
       filter: {},
    },
    reducers: {

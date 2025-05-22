@@ -10,6 +10,8 @@ services:
       volumes:
          - ./api:/var/www/html
       restart: always
+      networks:
+         - pps-network
 
    kerjasama-controlpanel:
       container_name: kerjasama-controlpanel
@@ -22,3 +24,8 @@ services:
       environment:
          - NODE_ENV=production
       restart: always
+
+networks:
+   pps-network:
+      external: true
+      name: pps-network

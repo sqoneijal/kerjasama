@@ -20,7 +20,52 @@ const _nav = [
             name: "Layanan",
             href: "/referensi/layanan",
          },
+         {
+            component: CNavItem,
+            name: "Jenis MoU",
+            href: "/referensi/jenismou",
+         },
+         {
+            component: CNavItem,
+            name: "MoU",
+            href: "/referensi/mou",
+         },
+         {
+            component: CNavItem,
+            name: "Lembaga",
+            href: "/referensi/lembaga",
+         },
       ],
+   },
+   {
+      component: CNavGroup,
+      name: "Tentang",
+      href: "/tentang",
+      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+      items: [
+         {
+            component: CNavItem,
+            name: "Profil",
+            href: "/tentang/profil",
+         },
+         {
+            component: CNavItem,
+            name: "Struktur Organisasi",
+            href: "/tentang/strukturorganisasi",
+         },
+         {
+            component: CNavItem,
+
+            name: "Sekretariat",
+            href: "/tentang/sekretariat",
+         },
+      ],
+   },
+   {
+      component: CNavItem,
+      name: "Mitra",
+      href: "/mitra",
+      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
    },
 ];
 
