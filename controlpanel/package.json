@@ -6,8 +6,7 @@
       "dev": "next dev --turbopack",
       "build": "next build",
       "start": "next start",
-      "lint": "next lint",
-      "postinstall": "node --trace-warnings ./postinstall.js"
+      "lint": "next lint"
    },
    "dependencies": {
       "@coreui/chartjs": "^4.0.0",

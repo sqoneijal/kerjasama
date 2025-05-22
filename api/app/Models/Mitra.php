@@ -42,14 +42,16 @@ class Mitra extends Model
       }
    }
 
-   public function getData()
+   public function getData(array $post)
    {
       $table = $this->db->table('tb_mitra tm');
       $table->select('tm.*, tmjm.nama as nama_jenis_mou, tmm.nama as mou, tml.nama as nama_lembaga');
       $table->join('tb_mst_jenis_mou tmjm', 'tmjm.id = tm.id_jenis_mou');
       $table->join('tb_mst_mou tmm', 'tmm.id = tm.id_mou');
       $table->join('tb_mst_lembaga tml', 'tml.id = tm.id_lembaga');
+      $this->searchData($table, $post);
       $table->orderBy('tm.id', 'desc');
+      $table->limit((int) $post['limit'], (int) $post['offset']);
 
       $get = $table->get();
       $result = $get->getResultArray();
@@ -62,7 +64,50 @@ class Mitra extends Model
             $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
          }
       }
-      return $response;
+
+      return [
+         'result' => $response,
+         'total' => $this->getTotalData($post),
+      ];
+   }
+
+   private function getTotalData()
+   {
+      $table = $this->db->table('tb_mitra tm');
+      $table->select('tm.*, tmjm.nama as nama_jenis_mou, tmm.nama as mou, tml.nama as nama_lembaga');
+      $table->join('tb_mst_jenis_mou tmjm', 'tmjm.id = tm.id_jenis_mou');
+      $table->join('tb_mst_mou tmm', 'tmm.id = tm.id_mou');
+      $table->join('tb_mst_lembaga tml', 'tml.id = tm.id_lembaga');
+
+      return $table->countAllResults();
+   }
+
+   private function searchData($table, array $post)
+   {
+      $column_search = [
+         'tm.nama_mitra',
+         'tm.nomor_dokumen',
+         'tmjm.nama',
+         'tmm.nama',
+         'tml.nama'
+      ];
+
+      $i = 0;
+      foreach ($column_search as $item) {
+         if (@$post['search']) {
+            if ($i === 0) {
+               $table->groupStart();
+               $table->like('trim(lower(cast(' . $item . ' as varchar)))', trim(strtolower($post['search'])));
+            } else {
+               $table->orLike('trim(lower(cast(' . $item . ' as varchar)))', trim(strtolower($post['search'])));
+            }
+
+            if (count($column_search) - 1 === $i) {
+               $table->groupEnd();
+            }
+         }
+         $i++;
+      }
    }
 
    public function getDropdownData(): array

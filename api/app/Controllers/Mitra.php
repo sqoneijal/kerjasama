@@ -16,7 +16,7 @@ class Mitra extends BaseController
    {
       if ($this->request->is('get')) {
          $model = new Model();
-         $content = $model->getData();
+         $content = $model->getData($this->request->getGet());
 
          return $this->respondCreated($content);
       }

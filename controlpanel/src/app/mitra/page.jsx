@@ -90,9 +90,31 @@ export default function MitraPage() {
 
    const renderStatus = (row) => {
       if (row.is_tak_terhingga === "t") {
-         return `<span class="badge badge-success">Aktif</span>`;
+         return `Masih Berjalan`;
       }
-      console.log(row);
+
+      const awal = moment(row.tanggal_mulai);
+      const akhir = moment(row.tanggal_berakhir);
+
+      const diff = akhir.diff(awal, "days");
+      if (diff < 0) {
+         return `Sudah Berakhir`;
+      } else if (diff <= 30) {
+         return `Akan Berakhir ${diff} Hari Lagi`;
+      } else {
+         return `Masih Berjalan`;
+      }
+   };
+
+   const renderNomor = (row) => {
+      return `
+         ${row.nomor_dokumen}
+         ${
+            row.nama_dokumen
+               ? `<br /><a href="https://drive.google.com/file/d/${row.id_dokumen}/view?usp=drive_link" target="_blank" style="font-size: 12px;">${row.nama_dokumen}</a>`
+               : ""
+         }
+         `;
    };
 
    useLayoutEffect(() => {
@@ -130,7 +152,7 @@ export default function MitraPage() {
             },
             {
                name: "Nomor",
-               data: (row) => row.nomor_dokumen,
+               data: (row) => html(renderNomor(row)),
             },
             {
                name: "Lembaga",
@@ -147,20 +169,26 @@ export default function MitraPage() {
          ],
          server: {
             url: `${apiUrl}/mitra/getdata`,
-            then: (data) => data,
-            handle: async (res) => {
-               if (res.status === 404) return { data: [] };
-
-               const text = await res.text();
-
-               if (text.trim().startsWith("<")) {
-                  return { data: [] };
-               }
-
-               return JSON.parse(text);
+            then: (data) => data.result,
+            total: (data) => data.total,
+         },
+         search: {
+            server: {
+               url: (prev, keyword) => {
+                  const separator = prev.includes("?") ? "&" : "?";
+                  return `${prev}${separator}search=${keyword}`;
+               },
             },
          },
-         search: false,
+         pagination: {
+            limit: 10,
+            server: {
+               url: (prev, page, limit) => {
+                  const separator = prev.includes("?") ? "&" : "?";
+                  return `${prev}${separator}limit=${limit}&offset=${page * limit}`;
+               },
+            },
+         },
       });
 
       if (gridWrapper.current) {
