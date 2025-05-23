@@ -1,7 +1,21 @@
 import axios from "axios";
+import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const decodeJwt = (token) => {
+   const base64Url = token.split(".")[1];
+   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+   const jsonPayload = decodeURIComponent(
+      atob(base64)
+         .split("")
+         .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+         .join("")
+   );
+
+   return JSON.parse(jsonPayload);
+};
 
 export const post = async (url, form = [], config = {}) => {
    try {
@@ -26,6 +40,10 @@ export const post = async (url, form = [], config = {}) => {
 
       await mutex.lock();
       const formData = new FormData();
+
+      const session = await getSession();
+      formData.append("user_modified", decodeJwt(session.accessToken).preferred_username);
+
       Object.keys(form).forEach((data) => formData.append(data, form[data]));
 
       const send = axios.post(`${apiUrl}${url}`, formData, { ...config, signal: abortSignal(200_000) });

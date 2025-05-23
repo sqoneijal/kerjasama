@@ -67,7 +67,16 @@ export default function AppHeaderDropdown() {
                </CBadge>
             </CDropdownItem>
             <CDropdownDivider />
-            <CDropdownItem onClick={() => signOut()} style={{ cursor: "pointer" }}>
+            <CDropdownItem
+               onClick={() =>
+                  signOut({
+                     redirect: false,
+                     callbackUrl: `https://iam.ar-raniry.ac.id/realms/uinar/protocol/openid-connect/logout?client_id=kerjasama&redirect_uri=${encodeURIComponent(
+                        "http://kerjasama.local:3000"
+                     )}`,
+                  })
+               }
+               style={{ cursor: "pointer" }}>
                <CIcon icon={cilLockLocked} className="me-2" />
                Logout
             </CDropdownItem>

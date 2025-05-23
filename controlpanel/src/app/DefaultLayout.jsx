@@ -1,15 +1,21 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
 import AppHeader from "./components/AppHeader";
 import AppSidebar from "./components/AppSidebar";
 
 export default function DefaultLayout({ children }) {
-   const { data: session } = useSession();
+   const { status } = useSession();
 
-   if (!session) {
-      return <button onClick={() => signIn("keycloak")}>Login</button>;
-   }
+   useEffect(() => {
+      if (status !== "loading" && status === "unauthenticated") {
+         signIn("keycloak");
+      }
+      return () => {
+         return null;
+      };
+   }, [status]);
 
    return (
       <div>

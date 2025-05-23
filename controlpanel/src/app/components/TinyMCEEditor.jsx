@@ -32,7 +32,6 @@ export default function TinyMCEEditor({ ...props }) {
                "nonbreaking",
                "pagebreak",
                "preview",
-               "print",
                "quickbars",
                "save",
                "searchreplace",
