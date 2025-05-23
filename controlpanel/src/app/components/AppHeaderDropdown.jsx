@@ -6,10 +6,6 @@ import Image from "next/image";
 import avatar from "../assets/images/blank-avatar.png";
 
 export default function AppHeaderDropdown() {
-   const handleLogout = async () => {
-      await signOut({ callbackUrl: "https://iam.ar-raniry.ac.id/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://localhost:3000" });
-   };
-
    return (
       <CDropdown variant="nav-item">
          <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
@@ -71,7 +67,7 @@ export default function AppHeaderDropdown() {
                </CBadge>
             </CDropdownItem>
             <CDropdownDivider />
-            <CDropdownItem onClick={handleLogout} style={{ cursor: "pointer" }}>
+            <CDropdownItem onClick={() => signOut()} style={{ cursor: "pointer" }}>
                <CIcon icon={cilLockLocked} className="me-2" />
                Logout
             </CDropdownItem>

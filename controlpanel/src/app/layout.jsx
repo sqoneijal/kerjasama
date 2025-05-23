@@ -1,10 +1,10 @@
+import "@/app/assets/custom.css";
+import SessionProvider from "@/app/components/SessionProvider";
 import { CSpinner } from "@coreui/react";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import DefaultLayout from "./DefaultLayout";
 import ReduxProvider from "./ReduxProvider";
-
-import "@/app/assets/custom.css";
 import "./scss/style.scss";
 
 export const metadata = {
@@ -16,17 +16,19 @@ export default async function RootLayout({ children }) {
    return (
       <html lang="id">
          <body>
-            <Toaster position="top-center" />
-            <ReduxProvider>
-               <Suspense
-                  fallback={
-                     <div className="pt-3 text-center">
-                        <CSpinner color="primary" variant="grow" />
-                     </div>
-                  }>
-                  <DefaultLayout>{children}</DefaultLayout>
-               </Suspense>
-            </ReduxProvider>
+            <SessionProvider>
+               <Toaster position="top-center" />
+               <ReduxProvider>
+                  <Suspense
+                     fallback={
+                        <div className="pt-3 text-center">
+                           <CSpinner color="primary" variant="grow" />
+                        </div>
+                     }>
+                     <DefaultLayout>{children}</DefaultLayout>
+                  </Suspense>
+               </ReduxProvider>
+            </SessionProvider>
          </body>
       </html>
    );

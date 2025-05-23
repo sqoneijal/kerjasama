@@ -1,7 +1,16 @@
+"use client";
+
+import { signIn, useSession } from "next-auth/react";
 import AppHeader from "./components/AppHeader";
 import AppSidebar from "./components/AppSidebar";
 
 export default function DefaultLayout({ children }) {
+   const { data: session } = useSession();
+
+   if (!session) {
+      return <button onClick={() => signIn("keycloak")}>Login</button>;
+   }
+
    return (
       <div>
          <AppSidebar />
