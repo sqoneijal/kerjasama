@@ -67,6 +67,24 @@ const _nav = [
       href: "/mitra",
       icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
    },
+   {
+      component: CNavGroup,
+      name: "Berita",
+      href: "/berita",
+      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+      items: [
+         {
+            component: CNavItem,
+            name: "Dalam Negeri",
+            href: "/berita/dalamnegeri",
+         },
+         {
+            component: CNavItem,
+            name: "Luar Negeri",
+            href: "/berita/luarnegeri",
+         },
+      ],
+   },
 ];
 
 export default _nav;
