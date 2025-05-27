@@ -8,6 +8,18 @@ use CodeIgniter\Model;
 class Mitra extends Model
 {
 
+   public function hapus(array $post): array
+   {
+      try {
+         $table = $this->db->table('tb_mitra');
+         $table->where('id', $post['id']);
+         $table->delete();
+         return ['status' => true, 'message' => 'Data berhasil dihapus.'];
+      } catch (\Exception $e) {
+         return ['status' => false, 'message' => $e->getMessage()];
+      }
+   }
+
    public function submit(array $post): array
    {
       try {

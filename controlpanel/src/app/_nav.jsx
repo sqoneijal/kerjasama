@@ -35,6 +35,16 @@ const _nav = [
             name: "Lembaga",
             href: "/referensi/lembaga",
          },
+         {
+            component: CNavItem,
+            name: "Kategori Berita",
+            href: "/referensi/kategoriberita",
+         },
+         {
+            component: CNavItem,
+            name: "Tags Berita",
+            href: "/referensi/tagsberita",
+         },
       ],
    },
    {

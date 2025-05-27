@@ -7,3 +7,6 @@ controlpanel/node_modules
 controlpanel/.env
 /controlpanel/public/tinymce/
 api/writable/google-service.json
+admin/node_modules
+node_modules
+admin/bundle

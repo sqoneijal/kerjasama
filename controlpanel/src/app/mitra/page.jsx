@@ -120,7 +120,8 @@ export default function MitraPage() {
    useLayoutEffect(() => {
       dispatch(
          setModule({
-            ...module,
+            pageType: "",
+            dataUpdate: {},
             pageButton: {
                variant: "primary",
                label: "Tambah Data",

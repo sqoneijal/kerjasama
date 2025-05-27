@@ -84,7 +84,8 @@ export default function JenismouPage() {
    useLayoutEffect(() => {
       dispatch(
          setModule({
-            ...module,
+            pageType: "",
+            dataUpdate: {},
             pageButton: {
                variant: "primary",
                label: "Tambah Data",

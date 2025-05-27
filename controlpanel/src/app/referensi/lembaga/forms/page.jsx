@@ -21,13 +21,13 @@ export default function LembagaForm() {
    });
 
    const clearState = () => {
-      router.push("/referensi/lembaga");
       setState({
          input: {},
          errors: {},
          isLoading: false,
       });
       dispatch(setModule({ ...module, pageType: "", dataUpdate: {} }));
+      router.push("/referensi/lembaga");
    };
 
    useEffect(() => {

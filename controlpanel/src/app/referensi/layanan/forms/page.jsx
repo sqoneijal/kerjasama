@@ -21,13 +21,13 @@ export default function LayananForm() {
    });
 
    const clearState = () => {
-      router.push("/referensi/layanan");
       setState({
          input: {},
          errors: {},
          isLoading: false,
       });
       dispatch(setModule({ ...module, pageType: "", dataUpdate: {} }));
+      router.push("/referensi/layanan");
    };
 
    useEffect(() => {

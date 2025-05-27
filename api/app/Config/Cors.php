@@ -34,7 +34,7 @@ class Cors extends BaseConfig
        *   - ['http://localhost:8080']
        *   - ['https://www.example.com']
        */
-      'allowedOrigins' => ['http://localhost:3000', 'http://192.168.176.232:1011', 'http://kerjasama.local:3000'],
+      'allowedOrigins' => ['http://localhost:3000', 'http://192.168.176.232:1011', 'http://kerjasama.local:3000', 'http://kerjasama.local'],
 
       /**
        * Origin regex patterns for the `Access-Control-Allow-Origin` header.
@@ -47,7 +47,7 @@ class Cors extends BaseConfig
        * E.g.:
        *   - ['https://\w+\.example\.com']
        */
-      'allowedOriginsPatterns' => ['http://localhost:3000', 'http://kerjasama.local:3000', 'http://192.168.176.232:1011'],
+      'allowedOriginsPatterns' => ['http://localhost:3000', 'http://kerjasama.local:3000', 'http://192.168.176.232:1011', 'http://kerjasama.local'],
 
       /**
        * Weather to send the `Access-Control-Allow-Credentials` header.

@@ -21,13 +21,13 @@ export default function JenismouForm() {
    });
 
    const clearState = () => {
-      router.push("/referensi/jenismou");
       setState({
          input: {},
          errors: {},
          isLoading: false,
       });
       dispatch(setModule({ ...module, pageType: "", dataUpdate: {} }));
+      router.push("/referensi/jenismou");
    };
 
    useEffect(() => {

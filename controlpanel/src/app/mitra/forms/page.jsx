@@ -23,7 +23,6 @@ export default function MitraForms() {
    });
 
    const clearState = () => {
-      router.push("/mitra");
       setState({
          input: {},
          errors: {},
@@ -32,6 +31,7 @@ export default function MitraForms() {
          selectedDropdown: {},
       });
       dispatch(setModule({ ...module, pageType: "", dataUpdate: {} }));
+      router.push("/mitra");
    };
 
    const loadDropdown = async () => {

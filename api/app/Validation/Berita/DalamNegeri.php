@@ -4,8 +4,14 @@ namespace App\Validation\Berita;
 
 class DalamNegeri
 {
-    // public function custom_rule(): bool
-    // {
-    //     return true;
-    // }
+
+   public function submit(): array
+   {
+      return [
+         'judul' => [
+            'rules' => 'required',
+            'label' => 'Judul berita'
+         ]
+      ];
+   }
 }

@@ -12,6 +12,15 @@ use Google\Service\Drive\DriveFile as Google_Service_Drive_DriveFile;
 class Mitra extends BaseController
 {
 
+   public function hapus()
+   {
+      if ($this->request->is('post')) {
+         $model = new Model();
+         $content = $model->hapus($this->request->getPost());
+         return $this->respondCreated($content);
+      }
+   }
+
    public function getData()
    {
       if ($this->request->is('get')) {
@@ -64,6 +73,10 @@ class Mitra extends BaseController
 
    private function handleUploadToGoogleDrive($file, $namaFolder)
    {
+      $upload_path = WRITEPATH . 'uploads';
+      $getRandomName = $file->getRandomName();
+      $file->move($upload_path, $getRandomName);
+
       $parentId = '11ZMJOvtfH27rsdmZFpuSeixB9c1mxzve';
 
       $client = new Google_Client();
@@ -82,11 +95,15 @@ class Mitra extends BaseController
       $driveFile->setName($file->getClientName());
       $driveFile->setParents([$endPointFolder]);
 
-      return $driveService->files->create($driveFile, array(
-         'data' => file_get_contents($file->getTempName()),
+      $submitUpload = $driveService->files->create($driveFile, array(
+         'data' => file_get_contents($upload_path . '/' . $getRandomName),
          'mimeType' => $file->getClientMimeType(),
          'uploadType' => 'multipart'
       ));
+
+      @unlink($upload_path . '/' . $getRandomName);
+
+      return $submitUpload;
    }
 
    private function cariFolderGoogleDrive($service, $folderName, $parentId = null)

@@ -90,7 +90,7 @@ export default function DropzoneUpload({ onFileSelect }) {
 
          <style>{`
             .upload-wrapper {
-               max-width: 30%;
+               max-width: 100%;
                margin: 20px auto;
                text-align: center;
             }

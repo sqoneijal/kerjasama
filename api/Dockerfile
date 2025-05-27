@@ -33,6 +33,9 @@ RUN ln -s /usr/bin/php83 /usr/bin/php
 
 COPY ./nginx.conf /etc/nginx/http.d/default.conf
 
+# RUN chown -R www-data:www-data /var/www/html/writable/uploads \
+#     && chmod -R 775 /var/www/html/writable/uploads
+
 # Port yang akan digunakan oleh Nginx
 EXPOSE 80
 

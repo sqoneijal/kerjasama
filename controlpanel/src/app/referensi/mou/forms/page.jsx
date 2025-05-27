@@ -21,13 +21,13 @@ export default function MouForm() {
    });
 
    const clearState = () => {
-      router.push("/referensi/mou");
       setState({
          input: {},
          errors: {},
          isLoading: false,
       });
       dispatch(setModule({ ...module, pageType: "", dataUpdate: {} }));
+      router.push("/referensi/mou");
    };
 
    useEffect(() => {

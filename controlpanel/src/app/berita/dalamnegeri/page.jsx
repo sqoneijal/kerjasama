@@ -21,7 +21,7 @@ export default function DalamnegeriPage() {
       e.preventDefault();
       const json = e.target.dataset.json;
       dispatch(setModule({ ...module, pageType: "update", dataUpdate: JSON.parse(decodeURIComponent(json)) }));
-      router.push("/referensi/jenismou/forms");
+      router.push("/berita/dalamnegeri/forms");
    };
 
    const reloadGrid = () => {
@@ -58,7 +58,7 @@ export default function DalamnegeriPage() {
             confirmButtonText: "Yes, delete it!",
          }).then(async (result) => {
             if (result.isConfirmed) {
-               const res = await post("/referensi/jenismou/hapus", { id });
+               const res = await post("/berita/dalamnegeri/hapus", { id });
                processDeleteResponse(res);
             }
          });
@@ -81,10 +81,39 @@ export default function DalamnegeriPage() {
       handleDelete(id);
    };
 
+   const renderKategori = (obj) => {
+      if (obj) {
+         const data = JSON.parse(obj);
+         const html = [];
+         if (data) {
+            data.forEach((row) => {
+               html.push(`<a href="/kategori/${row.slug}" target="_blank">${row.nama}</a>`);
+            });
+         }
+         return html.join(", ");
+      }
+      return "";
+   };
+
+   const renderTags = (obj) => {
+      if (obj) {
+         const data = JSON.parse(obj);
+         const html = [];
+         if (data) {
+            data.forEach((row) => {
+               html.push(`<a href="/tags/${row.slug}" target="_blank">${row.nama}</a>`);
+            });
+         }
+         return html.join(", ");
+      }
+      return "";
+   };
+
    useLayoutEffect(() => {
       dispatch(
          setModule({
-            ...module,
+            pageType: "",
+            dataUpdate: {},
             pageButton: {
                variant: "primary",
                label: "Tambah Data",
@@ -102,37 +131,26 @@ export default function DalamnegeriPage() {
                   const dataJson = row ? encodeURIComponent(JSON.stringify(row)) : "";
 
                   return html(
-                     `<strong>${row.nama}</strong>
+                     `<a href="/berita/read/${row.slug}" target="_blank"><strong>${row.judul}</strong></a>
                      <div class="row-actions">
-                        <span class="edit"><a href="" id="edit" data-json='${dataJson}'>Edit</a> | </span>
-                        <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
+                        <span class="edit"><a href="#" id="edit" data-json='${dataJson}'>Edit</a> | </span>
+                        <span class="trash"><a href="#" id="hapus" data-id="${row.id}">Hapus</a></span>
                      </div>`
                   );
                },
             },
             {
                name: "Kategori",
-               data: (row) => row.keterangan,
+               data: (row) => html(renderKategori(row.kategori)),
             },
             {
                name: "Tags",
-               data: (row) => row.keterangan,
+               data: (row) => html(renderTags(row.tags)),
             },
          ],
          server: {
             url: `${apiUrl}/berita/dalamnegeri/getdata`,
-            then: (data) => data,
-            handle: async (res) => {
-               if (res.status === 404) return { data: [] };
-
-               const text = await res.text();
-
-               if (text.trim().startsWith("<")) {
-                  return { data: [] };
-               }
-
-               return JSON.parse(text);
-            },
+            then: (data) => data.results,
          },
          search: false,
       });

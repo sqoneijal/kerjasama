@@ -1,0 +1,40 @@
+{
+   "type": "module",
+   "scripts": {
+      "build:scss": "sass --load-path=node_modules src/scss/style.scss:src/scss/style.css",
+      "build:tinymce": "node ./postinstall.js",
+      "dev": "npm run build:tinymce && esbuild --define:process.env.NODE_ENV=\\\"development\\\" ./src/index.jsx --bundle --watch --alias:@=./src/ --alias:@helpers=./src/helpers --outdir=./bundle --loader:.css=css --loader:.svg=dataurl --loader:.webp=dataurl --loader:.eot=copy --loader:.png=dataurl --loader:.jpg=dataurl --loader:.woff=copy --loader:.woff2=copy --loader:.scss=file --loader:.ttf=copy --sourcemap --log-limit=0 --jsx=automatic",
+      "build": "./pre-build.sh && ./esbuild.config.js && ./build.sh",
+      "build_tinymce": "node ./build_tinymce.js"
+   },
+   "devDependencies": {
+      "dotenv-cli": "^8.0.0",
+      "esbuild": "0.25.4",
+      "fs-extra": "^11.3.0",
+      "sass": "^1.89.0"
+   },
+   "dependencies": {
+      "@coreui/chartjs": "^4.0.0",
+      "@coreui/icons": "^3.0.1",
+      "@coreui/icons-react": "^2.3.0",
+      "@coreui/react": "^5.7.0",
+      "@reduxjs/toolkit": "^2.8.2",
+      "@tinymce/tinymce-react": "^6.1.0",
+      "core-js": "^3.42.0",
+      "html-entities": "^2.6.0",
+      "moment": "^2.30.1",
+      "react": "^19.1.0",
+      "react-bootstrap": "^2.10.10",
+      "react-bootstrap-typeahead": "^6.4.1",
+      "react-dom": "^19.1.0",
+      "react-hot-toast": "^2.5.2",
+      "react-redux": "^9.2.0",
+      "react-router-dom": "^7.6.1",
+      "simplebar-react": "^3.3.1",
+      "tinymce": "^7.9.0"
+   },
+   "sideEffects": [
+      "*.scss",
+      "*.css"
+   ]
+}
