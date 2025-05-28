@@ -3,10 +3,10 @@
 namespace App\Controllers\Berita;
 
 use App\Controllers\BaseController;
-use App\Models\Berita\DalamNegeri as Model;
-use App\Validation\Berita\DalamNegeri as Validate;
+use App\Models\Berita\Luarnegeri as Model;
+use App\Validation\Berita\Luarnegeri as Validate;
 
-class Dalamnegeri extends BaseController
+class Luarnegeri extends BaseController
 {
    public function getData()
    {

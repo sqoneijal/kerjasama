@@ -1,10 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function DropzoneUpload({ onFileSelect }) {
+export default function DropzoneUpload({ onFileSelect, existsFileName, previewLink }) {
    const fileInputRef = useRef(null);
    const [previewUrl, setPreviewUrl] = useState(null);
    const [fileName, setFileName] = useState("");
    const [fileType, setFileType] = useState("");
+
+   useEffect(() => {
+      if (previewLink) {
+         setPreviewUrl(previewLink);
+      }
+      return () => {};
+   }, [previewLink]);
 
    const handleFileChange = (e) => {
       const file = e.target.files?.[0];
@@ -81,11 +88,12 @@ export default function DropzoneUpload({ onFileSelect }) {
             <div className="overlay">Klik untuk ganti file</div>
          </div>
 
-         {fileName && (
-            <div className="file-name">
-               File: {fileName} ({fileType})
-            </div>
-         )}
+         {fileName ||
+            (existsFileName && (
+               <div className="file-name">
+                  File: {fileName || existsFileName} ({fileType})
+               </div>
+            ))}
 
          <style>{`
             .upload-wrapper {

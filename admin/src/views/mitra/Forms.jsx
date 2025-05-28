@@ -12,6 +12,7 @@ export default function Forms() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
+   const [isLoadingGetDropdown, setIsLoadingGetDropdown] = useState(true);
    const [state, setState] = useState({
       input: {},
       errors: {},
@@ -37,18 +38,33 @@ export default function Forms() {
             const { data } = res;
             setState((prev) => ({ ...prev, dropdown: data }));
          })
+         .finally(() => {
+            setIsLoadingGetDropdown(false);
+         })
          .catch((err) => {
             toast.error(err.message);
          });
    };
 
+   const filterByValue = (dataArray, targetValue) => {
+      return dataArray.filter((item) => item.value === targetValue);
+   };
+
    useEffect(() => {
       loadDropdown();
-      if (pageType === "update" && Object.keys(dataUpdate).length > 0) {
+      if (pageType === "update" && Object.keys(dataUpdate).length > 0 && !isLoadingGetDropdown) {
          setState((prev) => ({ ...prev, input: dataUpdate }));
+         setState((prev) => ({
+            ...prev,
+            selectedDropdown: {
+               ...prev.selectedDropdown,
+               id_mou: filterByValue(state.dropdown.daftarMoU, dataUpdate.id_mou),
+               id_lembaga: filterByValue(state.dropdown.daftarLembaga, dataUpdate.id_lembaga),
+            },
+         }));
       }
       return () => {};
-   }, [pageType, dataUpdate]);
+   }, [pageType, dataUpdate, isLoadingGetDropdown]);
 
    useEffect(() => {
       dispatch(
@@ -222,7 +238,7 @@ export default function Forms() {
                <Row className="justify-content-md-center">
                   <h5>Dokumen</h5>
                   <Col md={12}>
-                     <DropzoneUpload onFileSelect={handleFile} />
+                     <DropzoneUpload onFileSelect={handleFile} existsFileName={"awjefhgakwjhgfkwef"} />
                   </Col>
                   <Col md={2} sm={12}>
                      <FormSelect

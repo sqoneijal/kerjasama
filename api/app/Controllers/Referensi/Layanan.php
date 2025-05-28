@@ -31,12 +31,10 @@ class Layanan extends BaseController
 
    public function getData()
    {
-      if ($this->request->is('get')) {
-         $model = new Model();
-         $content = $model->getLayanan();
+      $model = new Model();
+      $content = $model->getLayanan();
 
-         return $this->respondCreated($content);
-      }
+      return $this->respondCreated($content);
    }
 
    public function hapus()

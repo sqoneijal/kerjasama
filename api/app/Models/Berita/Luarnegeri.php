@@ -5,9 +5,8 @@ namespace App\Models\Berita;
 use App\Models\Common;
 use CodeIgniter\Database\RawSql;
 
-class DalamNegeri extends Common
+class Luarnegeri extends Common
 {
-
    public function hapus(array $post): array
    {
       try {
@@ -35,7 +34,7 @@ class DalamNegeri extends Common
          $data['modified_by'] = @$post['user_modified'];
          $data['content'] = htmlentities($post['content']);
          $data['slug'] = url_title($data['judul'], '-', true) . '-' . time();
-         $data['jenis_berita'] = 'dalamnegeri';
+         $data['jenis_berita'] = 'luarnegeri';
 
          $id_berita = null;
 
@@ -234,7 +233,7 @@ class DalamNegeri extends Common
       from tb_tags_berita ttb
       join tb_mst_tags_berita tmtb on tmtb.id = ttb.id_tags
       group by ttb.id_berita) ttb', 'ttb.id_berita = tb.id', 'left');
-      $table->where('tb.jenis_berita', 'dalamnegeri');
+      $table->where('tb.jenis_berita', 'luarnegeri');
       $table->orderBy('tb.id', 'desc');
 
       $get = $table->get();
@@ -258,7 +257,7 @@ class DalamNegeri extends Common
    private function countTotalBerita(): int
    {
       $table = $this->db->table('tb_berita');
-      $table->where('jenis_berita', 'dalamnegeri');
+      $table->where('jenis_berita', 'luarnegeri');
 
       return $table->countAllResults();
    }

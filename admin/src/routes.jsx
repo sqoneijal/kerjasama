@@ -16,6 +16,11 @@ const TentangStrukturOrganisasi = React.lazy(() => import("./views/tentang/Struk
 const TentangSekretariat = React.lazy(() => import("./views/tentang/Sekretariat"));
 const Mitra = React.lazy(() => import("./views/mitra/Page"));
 const MitraForms = React.lazy(() => import("./views/mitra/Forms"));
+const Berita = React.lazy(() => import("./views/berita/dalamnegeri/Page"));
+const BeritaDalamNegeri = React.lazy(() => import("./views/berita/dalamnegeri/Page"));
+const BeritaDalamNegeriForms = React.lazy(() => import("./views/berita/dalamnegeri/Forms"));
+const BeritaLuarNegeri = React.lazy(() => import("./views/berita/luarnegeri/Page"));
+const BeritaLuarNegeriForms = React.lazy(() => import("./views/berita/luarnegeri/Forms"));
 
 const routes = [
    { path: "/dashboard", name: "Dashboard", element: Dashboard },
@@ -34,6 +39,11 @@ const routes = [
    { path: "/tentang/sekretariat", name: "Sekretariat", element: TentangSekretariat },
    { path: "/mitra", name: "Mitra", element: Mitra },
    { path: "/mitra/forms", name: "Forms", element: MitraForms },
+   { path: "/berita", name: "Berita", element: Berita },
+   { path: "/berita/dalamnegeri", name: "Dalam Negeri", element: BeritaDalamNegeri },
+   { path: "/berita/dalamnegeri/forms", name: "Forms", element: BeritaDalamNegeriForms },
+   { path: "/berita/luarnegeri", name: "Luar Negeri", element: BeritaLuarNegeri },
+   { path: "/berita/luarnegeri/forms", name: "Forms", element: BeritaLuarNegeriForms },
 ];
 
 export default routes;
