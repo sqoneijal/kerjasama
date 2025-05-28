@@ -6,6 +6,20 @@ import FormText from "./FormText";
 import FormTextarea from "./FormTextarea";
 import FormTypeahead from "./FormTypeahead";
 import FormTypeaheadMultiple from "./FormTypeaheadMultiple";
+import { handleLogout, initKeycloak } from "./auth";
 import { get, post } from "./request";
 
-export { DropzoneUpload, Each, FormDatePicker, FormSelect, FormText, FormTextarea, FormTypeahead, FormTypeaheadMultiple, get, post };
+export {
+   DropzoneUpload,
+   Each,
+   FormDatePicker,
+   FormSelect,
+   FormText,
+   FormTextarea,
+   FormTypeahead,
+   FormTypeaheadMultiple,
+   get,
+   handleLogout,
+   initKeycloak,
+   post,
+};

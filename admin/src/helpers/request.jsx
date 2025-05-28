@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { initKeycloak } from "./auth";
 
 const decodeJwt = (token) => {
    const base64Url = token.split(".")[1];
@@ -37,8 +38,10 @@ export const post = async (url, form = [], config = {}) => {
 
       await mutex.lock();
       const formData = new FormData();
-
       Object.keys(form).forEach((data) => formData.append(data, form[data]));
+      initKeycloak().then((res) => {
+         console.log(res);
+      });
 
       const send = axios.post(`${window.apiUrl}${url}`, formData, { ...config, signal: abortSignal(200_000) });
       send.then((res) => {

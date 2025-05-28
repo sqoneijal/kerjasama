@@ -1,8 +1,8 @@
+import avatar8 from "@/assets/images/avatars/8.jpg";
 import { cilBell, cilCommentSquare, cilCreditCard, cilEnvelopeOpen, cilFile, cilLockLocked, cilSettings, cilTask, cilUser } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CAvatar, CBadge, CDropdown, CDropdownDivider, CDropdownHeader, CDropdownItem, CDropdownMenu, CDropdownToggle } from "@coreui/react";
-
-import avatar8 from "@/assets/images/avatars/8.jpg";
+import { handleLogout } from "@helpers";
 
 const AppHeaderDropdown = () => {
    return (
@@ -64,7 +64,7 @@ const AppHeaderDropdown = () => {
                </CBadge>
             </CDropdownItem>
             <CDropdownDivider />
-            <CDropdownItem href="#">
+            <CDropdownItem href="#" onClick={() => handleLogout()}>
                <CIcon icon={cilLockLocked} className="me-2" />
                Lock Account
             </CDropdownItem>

@@ -10,3 +10,5 @@ api/writable/google-service.json
 admin/node_modules
 node_modules
 admin/bundle
+admin/kerjasama.local+3-key.pem
+admin/kerjasama.local+3.pem

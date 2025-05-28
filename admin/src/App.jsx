@@ -1,5 +1,6 @@
 import "@/assets/css/custom.css";
 import { CSpinner, useColorModes } from "@coreui/react";
+import { initKeycloak } from "@helpers";
 import React, { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -13,6 +14,14 @@ const App = () => {
    const storedTheme = useSelector((state) => state.theme);
 
    useEffect(() => {
+      initKeycloak().then((res) => {
+         if (res) {
+            const { keycloak, user } = res;
+            console.log("User Info:", user);
+            console.log("Token:", keycloak.token);
+         }
+      });
+
       const urlParams = new URLSearchParams(window.location.href.split("?")[1]);
       const theme = urlParams.get("theme") && urlParams.get("theme").match(/^[A-Za-z0-9\s]+/)[0];
       if (theme) {
