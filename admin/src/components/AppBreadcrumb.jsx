@@ -2,7 +2,7 @@ import routes from "@/routes";
 import { CBreadcrumb } from "@coreui/react";
 import { Each } from "@helpers";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 
 const AppBreadcrumb = () => {
    const { module } = useSelector((e) => e.redux);

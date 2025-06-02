@@ -4,15 +4,16 @@ const { build } = require("esbuild");
 const path = require("path");
 
 build({
-   entryPoints: ["src/Index.jsx"],
+   entryPoints: ["src/index.jsx"],
    allowOverwrite: true,
    bundle: true,
    format: "esm", // Output format: ES modules
    minify: true,
    sourcemap: "external",
-   // inject: ["./src/assets/js/node-waves.js", "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"],
    alias: {
-      "~": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src"),
+      "@components": path.resolve(__dirname, "src/components"),
+      "@helpers": path.resolve(__dirname, "src/helpers"),
    },
    jsxSideEffects: true,
    splitting: true,
@@ -20,13 +21,14 @@ build({
    loader: {
       ".js": "jsx",
       ".png": "dataurl",
-      ".jpg": "copy",
+      ".jpg": "dataurl",
       ".ttf": "copy",
       ".woff": "copy",
       ".woff2": "copy",
       ".eot": "copy",
       ".svg": "dataurl",
       ".webp": "dataurl",
+      ".css": "css",
    },
    jsx: "automatic",
    plugins: [

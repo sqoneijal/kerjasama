@@ -4,7 +4,7 @@ import { setSidebarShow, setSidebarUnfoldable } from "@/redux";
 import CIcon from "@coreui/icons-react";
 import { CCloseButton, CSidebar, CSidebarFooter, CSidebarHeader, CSidebarToggler } from "@coreui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import navigation from "../_nav";
 import AppSidebarNav from "./AppSidebarNav";
 

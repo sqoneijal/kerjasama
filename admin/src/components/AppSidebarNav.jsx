@@ -1,5 +1,5 @@
 import { CBadge, CSidebarNav } from "@coreui/react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 

@@ -4,8 +4,10 @@ import { decode } from "html-entities";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export default function Sekretariat() {
+   const { init } = useSelector((e) => e.redux);
    const editorRef = useRef(null);
 
    const [state, setState] = useState({
@@ -14,7 +16,7 @@ export default function Sekretariat() {
    });
 
    const getData = () => {
-      post("/tentang/sekretariat/getdata")
+      post("/tentang/sekretariat/getdata", {}, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
             setState((prev) => ({ ...prev, content: decode(data.content, { level: "html5" }) }));
@@ -34,7 +36,7 @@ export default function Sekretariat() {
 
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const formData = {};
+      const formData = { user_modified: init.user_modified };
       formData.content = editorRef.current.getContent();
 
       post("/tentang/sekretariat/submit", formData)

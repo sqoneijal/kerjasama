@@ -1,12 +1,14 @@
-import Editor from "@/components/TinyMCEEditor";
+import Editor from "@components/TinyMCEEditor";
 import { post } from "@helpers";
 import { decode } from "html-entities";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
    const editorRef = useRef(null);
+   const { init } = useSelector((e) => e.redux);
 
    const [state, setState] = useState({
       isLoading: false,
@@ -14,7 +16,7 @@ export default function Profile() {
    });
 
    const getData = () => {
-      post("/tentang/profil/getdata")
+      post("/tentang/profil/getdata", {}, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
             setState((prev) => ({ ...prev, content: decode(data.content, { level: "html5" }) }));
@@ -24,7 +26,7 @@ export default function Profile() {
          });
    };
 
-   useEffect(() => {
+   useLayoutEffect(() => {
       getData();
       return () => {};
    }, []);
@@ -34,7 +36,7 @@ export default function Profile() {
 
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const formData = {};
+      const formData = { user_modified: init.user_modified };
       formData.content = editorRef.current.getContent();
 
       post("/tentang/profil/submit", formData)

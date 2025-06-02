@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function Forms() {
-   const { module } = useSelector((e) => e.redux);
+   const { module, init } = useSelector((e) => e.redux);
    const { pageType, dataUpdate } = module;
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Forms() {
    };
 
    const loadDropdown = async () => {
-      get("/mitra/dropdown")
+      get("/mitra/dropdown", { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
             setState((prev) => ({ ...prev, dropdown: data }));
@@ -85,10 +85,10 @@ export default function Forms() {
 
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const formData = { pageType };
+      const formData = { pageType, user_modified: init.user_modified };
       Object.keys(state.input).forEach((key) => (formData[key] = state.input[key]));
 
-      post("/mitra/submit", formData)
+      post("/mitra/submit", formData, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
 

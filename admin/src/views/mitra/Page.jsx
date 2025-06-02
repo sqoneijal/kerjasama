@@ -6,11 +6,11 @@ import moment from "moment/moment";
 import { useLayoutEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 export default function MitraPage() {
-   const { module } = useSelector((e) => e.redux);
+   const { module, init } = useSelector((e) => e.redux);
    const dispatch = useDispatch();
    const gridWrapper = useRef(null);
    const gridRef = useRef(null);
@@ -46,24 +46,20 @@ export default function MitraPage() {
    };
 
    const handleDelete = async (id) => {
-      try {
-         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-         }).then(async (result) => {
-            if (result.isConfirmed) {
-               const res = await post("/mitra/hapus", { id });
-               processDeleteResponse(res);
-            }
-         });
-      } catch (err) {
-         toast.error(err.message);
-      }
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+         if (result.isConfirmed) {
+            const res = await post("/mitra/hapus", { id }, { headers: { ...init.token } });
+            processDeleteResponse(res);
+         }
+      });
    };
 
    const handleClick = (e) => {
@@ -169,6 +165,7 @@ export default function MitraPage() {
             url: `${window.apiUrl}/mitra/getdata`,
             then: (data) => data.result,
             total: (data) => data.total,
+            headers: { ...init.token },
          },
          search: {
             server: {
@@ -176,6 +173,7 @@ export default function MitraPage() {
                   const separator = prev.includes("?") ? "&" : "?";
                   return `${prev}${separator}search=${keyword}`;
                },
+               headers: { ...init.token },
             },
          },
          pagination: {
@@ -185,6 +183,7 @@ export default function MitraPage() {
                   const separator = prev.includes("?") ? "&" : "?";
                   return `${prev}${separator}limit=${limit}&offset=${page * limit}`;
                },
+               headers: { ...init.token },
             },
          },
       });

@@ -13,14 +13,14 @@ services:
       networks:
          - pps-network
 
-   kerjasama-controlpanel:
-      container_name: kerjasama-controlpanel
-      image: kerjasama-controlpanel
+   kerjasama-admin:
+      container_name: kerjasama-admin
+      image: kerjasama-admin
       build:
-         context: ./controlpanel
+         context: ./admin
          dockerfile: ./Dockerfile
       ports:
-         - "1011:3000"
+         - "1011:80"
       environment:
          - NODE_ENV=production
       restart: always

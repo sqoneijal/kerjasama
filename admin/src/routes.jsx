@@ -11,11 +11,17 @@ const ReferensiLayananMoU = React.lazy(() => import("./views/referensi/mou/Page"
 const ReferensiLayananMoUForms = React.lazy(() => import("./views/referensi/mou/Forms"));
 const ReferensiLayananLembaga = React.lazy(() => import("./views/referensi/lembaga/Page"));
 const ReferensiLayananLembagaForms = React.lazy(() => import("./views/referensi/lembaga/Forms"));
+
+// Tentang
 const TentangProfile = React.lazy(() => import("./views/tentang/Profile"));
 const TentangStrukturOrganisasi = React.lazy(() => import("./views/tentang/StrukturOrganisasi"));
 const TentangSekretariat = React.lazy(() => import("./views/tentang/Sekretariat"));
+
+// Mitra
 const Mitra = React.lazy(() => import("./views/mitra/Page"));
 const MitraForms = React.lazy(() => import("./views/mitra/Forms"));
+
+// Berita
 const Berita = React.lazy(() => import("./views/berita/dalamnegeri/Page"));
 const BeritaDalamNegeri = React.lazy(() => import("./views/berita/dalamnegeri/Page"));
 const BeritaDalamNegeriForms = React.lazy(() => import("./views/berita/dalamnegeri/Forms"));

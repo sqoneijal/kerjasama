@@ -7,10 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function Forms() {
-   const { module } = useSelector((e) => e.redux);
+   const { module, init } = useSelector((e) => e.redux);
    const { pageType } = module;
    const editorRef = useRef(null);
    const dispatch = useDispatch();
@@ -73,7 +73,7 @@ export default function Forms() {
    };
 
    const getDropdown = () => {
-      get("/berita/dalamnegeri/getdropdown")
+      get("/berita/dalamnegeri/getdropdown", { headers: { ...init.token } })
          .then((res) => {
             setState((prev) => ({ ...prev, dropdown: res.data }));
          })
@@ -105,13 +105,13 @@ export default function Forms() {
       e.preventDefault();
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const formData = { pageType };
+      const formData = { pageType, user_modified: init.user_modified };
       Object.keys(state.input).forEach((key) => (formData[key] = state.input[key]));
       formData.content = editorRef.current.getContent();
       formData.selectedKategori = JSON.stringify(state.selectedKategori);
       formData.selectedTags = JSON.stringify(state.selectedTags);
 
-      post("/berita/dalamnegeri/submit", formData)
+      post("/berita/dalamnegeri/submit", formData, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
 

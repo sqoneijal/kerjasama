@@ -1,54 +1,47 @@
 import "@/assets/css/custom.css";
-import { CSpinner, useColorModes } from "@coreui/react";
+import { setInit } from "@/redux";
+import { CContainer, CSpinner } from "@coreui/react";
 import { initKeycloak } from "@helpers";
 import React, { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Routing from "./Routing";
 import "./scss/style.css";
 
-const DefaultLayout = React.lazy(() => import("./layout/DefaultLayout"));
+const AppSidebar = React.lazy(() => import("@components/AppSidebar"));
+const AppHeader = React.lazy(() => import("@components/AppHeader"));
 
 const App = () => {
-   const { isColorModeSet, setColorMode } = useColorModes("coreui-free-react-admin-template-theme");
-   const storedTheme = useSelector((state) => state.theme);
+   const { init } = useSelector((e) => e.redux);
+   const dispatch = useDispatch();
 
    useEffect(() => {
       initKeycloak().then((res) => {
          if (res) {
             const { keycloak, user } = res;
-            console.log("User Info:", user);
-            console.log("Token:", keycloak.token);
+            dispatch(setInit({ user, user_modified: user.preferred_username, token: { Authorization: `Bearer ${keycloak.token}` } }));
          }
       });
-
-      const urlParams = new URLSearchParams(window.location.href.split("?")[1]);
-      const theme = urlParams.get("theme") && urlParams.get("theme").match(/^[A-Za-z0-9\s]+/)[0];
-      if (theme) {
-         setColorMode(theme);
-      }
-
-      if (isColorModeSet()) {
-         return;
-      }
-
-      setColorMode(storedTheme);
    }, []);
 
    return (
-      <HashRouter>
-         <React.Suspense
-            fallback={
-               <div className="pt-3 text-center">
-                  <CSpinner color="primary" variant="grow" />
+      <React.Suspense
+         fallback={
+            <div className="pt-3 text-center">
+               <CSpinner color="primary" variant="grow" />
+            </div>
+         }>
+         <div>
+            <AppSidebar />
+            <div className="wrapper d-flex flex-column min-vh-100">
+               <AppHeader />
+               <div className="body flex-grow-1">
+                  <CContainer className="px-4" fluid>
+                     {Object.keys(init).length > 0 && <Routing />}
+                  </CContainer>
                </div>
-            }>
-            <Toaster position="top-center" />
-            <Routes>
-               <Route path="*" name="Home" element={<DefaultLayout />} />
-            </Routes>
-         </React.Suspense>
-      </HashRouter>
+            </div>
+         </div>
+      </React.Suspense>
    );
 };
 export default App;

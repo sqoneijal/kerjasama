@@ -4,7 +4,7 @@
       "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
       "This file is @generated automatically"
    ],
-   "content-hash": "5e3f831dced7b4de63bea70fab34fa41",
+   "content-hash": "c0437a5b734f9cde28f25c834f8726e6",
    "packages": [
       {
          "name": "firebase/php-jwt",
@@ -42,7 +42,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["BSD-3-Clause"],
+         "license": [
+            "BSD-3-Clause"
+         ],
          "authors": [
             {
                "name": "Neuman Vong",
@@ -57,7 +59,10 @@
          ],
          "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
          "homepage": "https://github.com/firebase/php-jwt",
-         "keywords": ["jwt", "php"],
+         "keywords": [
+            "jwt",
+            "php"
+         ],
          "support": {
             "issues": "https://github.com/firebase/php-jwt/issues",
             "source": "https://github.com/firebase/php-jwt/tree/v6.11.1"
@@ -108,17 +113,25 @@
             }
          },
          "autoload": {
-            "files": ["src/aliases.php"],
+            "files": [
+               "src/aliases.php"
+            ],
             "psr-4": {
                "Google\\": "src/"
             },
-            "classmap": ["src/aliases.php"]
+            "classmap": [
+               "src/aliases.php"
+            ]
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["Apache-2.0"],
+         "license": [
+            "Apache-2.0"
+         ],
          "description": "Client library for Google APIs",
          "homepage": "http://developers.google.com/api-client-library/php",
-         "keywords": ["google"],
+         "keywords": [
+            "google"
+         ],
          "support": {
             "issues": "https://github.com/googleapis/google-api-php-client/issues",
             "source": "https://github.com/googleapis/google-api-php-client/tree/v2.18.3"
@@ -147,16 +160,22 @@
          },
          "type": "library",
          "autoload": {
-            "files": ["autoload.php"],
+            "files": [
+               "autoload.php"
+            ],
             "psr-4": {
                "Google\\Service\\": "src"
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["Apache-2.0"],
+         "license": [
+            "Apache-2.0"
+         ],
          "description": "Client library for Google APIs",
          "homepage": "http://developers.google.com/api-client-library/php",
-         "keywords": ["google"],
+         "keywords": [
+            "google"
+         ],
          "support": {
             "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
             "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.396.0"
@@ -207,10 +226,16 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["Apache-2.0"],
+         "license": [
+            "Apache-2.0"
+         ],
          "description": "Google Auth Library for PHP",
          "homepage": "https://github.com/google/google-auth-library-php",
-         "keywords": ["Authentication", "google", "oauth2"],
+         "keywords": [
+            "Authentication",
+            "google",
+            "oauth2"
+         ],
          "support": {
             "docs": "https://cloud.google.com/php/docs/reference/auth/latest",
             "issues": "https://github.com/googleapis/google-auth-library-php/issues",
@@ -264,13 +289,17 @@
             }
          },
          "autoload": {
-            "files": ["src/functions_include.php"],
+            "files": [
+               "src/functions_include.php"
+            ],
             "psr-4": {
                "GuzzleHttp\\": "src/"
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Graham Campbell",
@@ -309,7 +338,17 @@
             }
          ],
          "description": "Guzzle is a PHP HTTP client library",
-         "keywords": ["client", "curl", "framework", "http", "http client", "psr-18", "psr-7", "rest", "web service"],
+         "keywords": [
+            "client",
+            "curl",
+            "framework",
+            "http",
+            "http client",
+            "psr-18",
+            "psr-7",
+            "rest",
+            "web service"
+         ],
          "support": {
             "issues": "https://github.com/guzzle/guzzle/issues",
             "source": "https://github.com/guzzle/guzzle/tree/7.9.3"
@@ -364,7 +403,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Graham Campbell",
@@ -388,7 +429,9 @@
             }
          ],
          "description": "Guzzle promises library",
-         "keywords": ["promise"],
+         "keywords": [
+            "promise"
+         ],
          "support": {
             "issues": "https://github.com/guzzle/promises/issues",
             "source": "https://github.com/guzzle/promises/tree/2.2.0"
@@ -454,7 +497,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Graham Campbell",
@@ -493,7 +538,16 @@
             }
          ],
          "description": "PSR-7 message implementation that also provides common utility methods",
-         "keywords": ["http", "message", "psr-7", "request", "response", "stream", "uri", "url"],
+         "keywords": [
+            "http",
+            "message",
+            "psr-7",
+            "request",
+            "response",
+            "stream",
+            "uri",
+            "url"
+         ],
          "support": {
             "issues": "https://github.com/guzzle/psr7/issues",
             "source": "https://github.com/guzzle/psr7/tree/2.7.1"
@@ -584,7 +638,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Jordi Boggiano",
@@ -594,7 +650,11 @@
          ],
          "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
          "homepage": "https://github.com/Seldaek/monolog",
-         "keywords": ["log", "logging", "psr-3"],
+         "keywords": [
+            "log",
+            "logging",
+            "psr-3"
+         ],
          "support": {
             "issues": "https://github.com/Seldaek/monolog/issues",
             "source": "https://github.com/Seldaek/monolog/tree/3.9.0"
@@ -639,7 +699,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Paragon Initiative Enterprises",
@@ -702,7 +764,9 @@
          },
          "type": "library",
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Paragon Initiative Enterprises",
@@ -711,7 +775,12 @@
             }
          ],
          "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-         "keywords": ["csprng", "polyfill", "pseudorandom", "random"],
+         "keywords": [
+            "csprng",
+            "polyfill",
+            "pseudorandom",
+            "random"
+         ],
          "support": {
             "email": "info@paragonie.com",
             "issues": "https://github.com/paragonie/random_compat/issues",
@@ -750,13 +819,17 @@
          },
          "type": "library",
          "autoload": {
-            "files": ["phpseclib/bootstrap.php"],
+            "files": [
+               "phpseclib/bootstrap.php"
+            ],
             "psr-4": {
                "phpseclib3\\": "phpseclib/"
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Jim Wigginton",
@@ -854,7 +927,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "PHP-FIG",
@@ -862,7 +937,11 @@
             }
          ],
          "description": "Common interface for caching libraries",
-         "keywords": ["cache", "psr", "psr-6"],
+         "keywords": [
+            "cache",
+            "psr",
+            "psr-6"
+         ],
          "support": {
             "source": "https://github.com/php-fig/cache/tree/3.0.0"
          },
@@ -898,7 +977,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "PHP-FIG",
@@ -907,7 +988,12 @@
          ],
          "description": "Common interface for HTTP clients",
          "homepage": "https://github.com/php-fig/http-client",
-         "keywords": ["http", "http-client", "psr", "psr-18"],
+         "keywords": [
+            "http",
+            "http-client",
+            "psr",
+            "psr-18"
+         ],
          "support": {
             "source": "https://github.com/php-fig/http-client"
          },
@@ -943,7 +1029,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "PHP-FIG",
@@ -951,7 +1039,16 @@
             }
          ],
          "description": "PSR-17: Common interfaces for PSR-7 HTTP message factories",
-         "keywords": ["factory", "http", "message", "psr", "psr-17", "psr-7", "request", "response"],
+         "keywords": [
+            "factory",
+            "http",
+            "message",
+            "psr",
+            "psr-17",
+            "psr-7",
+            "request",
+            "response"
+         ],
          "support": {
             "source": "https://github.com/php-fig/http-factory"
          },
@@ -986,7 +1083,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "PHP-FIG",
@@ -995,7 +1094,14 @@
          ],
          "description": "Common interface for HTTP messages",
          "homepage": "https://github.com/php-fig/http-message",
-         "keywords": ["http", "http-message", "psr", "psr-7", "request", "response"],
+         "keywords": [
+            "http",
+            "http-message",
+            "psr",
+            "psr-7",
+            "request",
+            "response"
+         ],
          "support": {
             "source": "https://github.com/php-fig/http-message/tree/2.0"
          },
@@ -1030,7 +1136,9 @@
             }
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "PHP-FIG",
@@ -1039,7 +1147,11 @@
          ],
          "description": "Common interface for logging libraries",
          "homepage": "https://github.com/php-fig/log",
-         "keywords": ["log", "psr", "psr-3"],
+         "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+         ],
          "support": {
             "source": "https://github.com/php-fig/log/tree/3.0.2"
          },
@@ -1068,10 +1180,14 @@
          },
          "type": "library",
          "autoload": {
-            "files": ["src/getallheaders.php"]
+            "files": [
+               "src/getallheaders.php"
+            ]
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Ralph Khattar",
@@ -1113,10 +1229,14 @@
             }
          },
          "autoload": {
-            "files": ["function.php"]
+            "files": [
+               "function.php"
+            ]
          },
          "notification-url": "https://packagist.org/downloads/",
-         "license": ["MIT"],
+         "license": [
+            "MIT"
+         ],
          "authors": [
             {
                "name": "Nicolas Grekas",

@@ -5,11 +5,11 @@ import "gridjs/dist/theme/mermaid.css";
 import { useLayoutEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 export default function Page() {
-   const { module } = useSelector((e) => e.redux);
+   const { module, init } = useSelector((e) => e.redux);
    const dispatch = useDispatch();
    const gridWrapper = useRef(null);
    const gridRef = useRef(null);
@@ -45,24 +45,20 @@ export default function Page() {
    };
 
    const handleDelete = async (id) => {
-      try {
-         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-         }).then(async (result) => {
-            if (result.isConfirmed) {
-               const res = await post("/referensi/lembaga/hapus", { id });
-               processDeleteResponse(res);
-            }
-         });
-      } catch (err) {
-         toast.error(err.message);
-      }
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+         if (result.isConfirmed) {
+            const res = await post("/referensi/lembaga/hapus", { id }, { headers: { ...init.token } });
+            processDeleteResponse(res);
+         }
+      });
    };
 
    const handleClick = (e) => {
@@ -114,17 +110,7 @@ export default function Page() {
          server: {
             url: `${window.apiUrl}/referensi/lembaga/getdata`,
             then: (data) => data,
-            handle: async (res) => {
-               if (res.status === 404) return { data: [] };
-
-               const text = await res.text();
-
-               if (text.trim().startsWith("<")) {
-                  return { data: [] };
-               }
-
-               return JSON.parse(text);
-            },
+            headers: { ...init.token },
          },
          search: true,
       });

@@ -4,7 +4,7 @@ export default function TinyMCEEditor({ ...props }) {
    return (
       <Editor
          {...props}
-         tinymceScriptSrc="bundle/tinymce/tinymce.min.js"
+         tinymceScriptSrc="/bundle/tinymce/tinymce.min.js"
          licenseKey="gpl"
          init={{
             height: 550,

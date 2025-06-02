@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function Forms() {
-   const { module } = useSelector((e) => e.redux);
+   const { module, init } = useSelector((e) => e.redux);
    const { pageType, dataUpdate } = module;
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -55,10 +55,10 @@ export default function Forms() {
 
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const formData = { pageType };
+      const formData = { pageType, user_modified: init.user.preferred_username };
       Object.keys(state.input).forEach((key) => (formData[key] = state.input[key]));
 
-      post("/referensi/jenismou/submit", formData)
+      post("/referensi/jenismou/submit", formData, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
 

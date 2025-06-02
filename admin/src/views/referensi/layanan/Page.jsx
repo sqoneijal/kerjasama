@@ -5,11 +5,11 @@ import "gridjs/dist/theme/mermaid.css";
 import { useLayoutEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 export default function Page() {
-   const { module } = useSelector((e) => e.redux);
+   const { module, init } = useSelector((e) => e.redux);
    const dispatch = useDispatch();
    const gridWrapper = useRef(null);
    const gridRef = useRef(null);
@@ -55,7 +55,7 @@ export default function Page() {
          confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
          if (result.isConfirmed) {
-            const res = await post("/referensi/layanan/hapus", { id });
+            const res = await post("/referensi/layanan/hapus", { id }, { headers: { ...init.token } });
             processDeleteResponse(res);
          }
       });
@@ -121,6 +121,7 @@ export default function Page() {
 
                return JSON.parse(text);
             },
+            headers: { ...init.token },
          },
          search: false,
       });
