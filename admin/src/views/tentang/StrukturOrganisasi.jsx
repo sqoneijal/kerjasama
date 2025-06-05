@@ -39,7 +39,7 @@ export default function StrukturOrganisasi() {
       const formData = { user_modified: init.user_modified };
       formData.content = editorRef.current.getContent();
 
-      post("/tentang/strukturorganisasi/submit", formData)
+      post("/tentang/strukturorganisasi/submit", formData, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
 

@@ -35,6 +35,7 @@ class Filters extends BaseFilters
       'pagecache'     => PageCache::class,
       'performance'   => PerformanceMetrics::class,
       'keycloak-auth' => \App\Filters\KeycloakAuthFilter::class,
+      'throttle' => \App\Filters\Throttle::class,
    ];
 
    /**
@@ -107,5 +108,6 @@ class Filters extends BaseFilters
     */
    public array $filters = [
       'keycloak-auth' => ['before' => ['referensi/*', 'tentang/*', 'mitra/*', 'berita/*']],
+      'throttle' => ['before' => ['frontend/*']]
    ];
 }

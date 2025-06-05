@@ -39,7 +39,7 @@ export default function Profile() {
       const formData = { user_modified: init.user_modified };
       formData.content = editorRef.current.getContent();
 
-      post("/tentang/profil/submit", formData)
+      post("/tentang/profil/submit", formData, { headers: { ...init.token } })
          .then((res) => {
             const { data } = res;
 

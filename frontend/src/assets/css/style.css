@@ -1,6 +1,61 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Manrope:wght@400..700&family=Noto+Serif+Display:ital,wght@0,400..700;1,400..700&family=Onest:wght@400..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Poppins:wght@500;600;700&family=Rajdhani:wght@500;600&family=Teachers:ital,wght@0,500..700;1,500..700&family=Work+Sans:ital,wght@0,400..700;1,400..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap");
-@import url("../../../node_modules/swiper/swiper-bundle.min.css");
-@import url("uni-core.css");
-@import url("prettify.css");
-@import url("main.min.css");
+@import url("../../../node_modules/bootstrap/dist/css/bootstrap.css");
+@import url("jquery-ui.css");
+@import url("jquery.smartmenus.bootstrap-4.css");
+@import url("all.css");
+@import url("themify-icons.css");
+@import url("weather-icons.css");
+@import url("../../../node_modules/swiper/swiper-bundle.css");
+@import url("animate.css");
+@import url("RYPP.css");
+@import url("main.css");
+@import url("style_selector.css");
+@import url("www-player.css");
+
+.navbar {
+   background-color: #fff !important;
+   --bs-navbar-color: #2f2e41 !important;
+   --bs-navbar-nav-link-padding-x: 0.7rem !important;
+   transition: all 0.3s ease !important;
+   border-top: 1px solid #e7e7e7 !important;
+   border-bottom: 1px solid #e7e7e7 !important;
+   --bs-navbar-toggler-icon-bg: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path stroke="%23212529" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M4 7h22M4 15h22M4 23h22"/></svg>');
+}
+
+@media (min-width: 992px) {
+   .navbar {
+      padding: 0;
+   }
+
+   .navbar.navbar-transfarent {
+      --bs-navbar-color: #fff;
+   }
+
+   .custom-navbar.navbar-light {
+      --bs-navbar-color: #2f2e41;
+   }
+
+   .navbar-expand-lg .navbar-nav .nav-item {
+      border-left: 1px solid #e7e7e7 !important;
+   }
+
+   .navbar-expand-lg .navbar-nav .nav-item:last-child {
+      border-right: 1px solid #e7e7e7 !important;
+   }
+
+   .home-seven .navbar-expand-lg .navbar-nav .nav-item {
+      border: 0;
+   }
+
+   .navbar-expand-lg .navbar-nav .dropdown-menu {
+      -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+   }
+
+   .navbar-expand-lg .navbar-nav .nav-link {
+      padding: 15px 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 0;
+   }
+}

@@ -14,3 +14,4 @@ admin/kerjasama.local+3-key.pem
 admin/kerjasama.local+3.pem
 admin/prod.js
 frontend/bundle
+frontend/prod.js

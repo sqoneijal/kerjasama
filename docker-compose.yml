@@ -25,6 +25,18 @@ services:
          - NODE_ENV=production
       restart: always
 
+   kerjasama-frontend:
+      container_name: kerjasama-frontend
+      image: kerjasama-frontend
+      build:
+         context: ./frontend
+         dockerfile: ./Dockerfile
+      ports:
+         - "1012:80"
+      environment:
+         - NODE_ENV=production
+      restart: always
+
 networks:
    pps-network:
       external: true
