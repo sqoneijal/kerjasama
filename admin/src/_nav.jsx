@@ -73,6 +73,18 @@ const _nav = [
       icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
    },
    {
+      component: CNavItem,
+      name: "Ruang Lingkup",
+      href: "/ruanglingkup",
+      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+   },
+   {
+      component: CNavItem,
+      name: "Tindak Lanjut",
+      href: "/tindaklanjut",
+      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+   },
+   {
       component: CNavGroup,
       name: "Berita",
       href: "/berita",

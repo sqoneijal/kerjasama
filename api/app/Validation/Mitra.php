@@ -24,10 +24,6 @@ class Mitra
             'label' => 'Nomor dokumen',
             'rules' => 'required'
          ],
-         'id_lembaga' => [
-            'label' => 'Lembaga',
-            'rules' => 'required'
-         ],
          'tanggal_mulai' => [
             'label' => 'Tanggal mulai',
             'rules' => 'required|valid_date[Y-m-d]'

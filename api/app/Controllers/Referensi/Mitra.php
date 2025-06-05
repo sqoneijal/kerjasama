@@ -9,6 +9,13 @@ use App\Validation\Referensi\Mitra as Validate;
 class Mitra extends BaseController
 {
 
+   public function getDropdown()
+   {
+      $model = new Model();
+      $content = $model->getDropdown();
+      return $this->respondCreated($content);
+   }
+
    public function submit()
    {
       if ($this->request->is('post')) {

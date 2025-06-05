@@ -23,7 +23,7 @@ class Mitra extends Model
    public function submit(array $post): array
    {
       try {
-         $fields = ['id_jenis_mou', 'id_mou', 'id_mitra', 'nomor_dokumen', 'id_lembaga', 'tanggal_mulai', 'tanggal_berakhir', 'is_tak_terhingga', 'id_dokumen', 'status_dokumen', 'nama_dokumen', 'durasi'];
+         $fields = ['id_jenis_mou', 'id_mou', 'id_mitra', 'nomor_dokumen', 'tanggal_mulai', 'tanggal_berakhir', 'is_tak_terhingga', 'id_dokumen', 'status_dokumen', 'nama_dokumen', 'durasi'];
          foreach ($fields as $field) {
             if (@$post[$field]) {
                $data[$field] = $post[$field];
@@ -57,11 +57,11 @@ class Mitra extends Model
    public function getData(array $post)
    {
       $table = $this->db->table('tb_mitra tm');
-      $table->select('tm.*, tmjm.nama as nama_jenis_mou, tmm.nama as mou, tml.nama as nama_lembaga, tmm2.nama as nama_mitra');
+      $table->select('tmm.nama as mou, tmm2.nama as nama_mitra, tml.nama as nama_lembaga, tm.*');
       $table->join('tb_mst_jenis_mou tmjm', 'tmjm.id = tm.id_jenis_mou');
       $table->join('tb_mst_mou tmm', 'tmm.id = tm.id_mou');
-      $table->join('tb_mst_lembaga tml', 'tml.id = tm.id_lembaga');
       $table->join('tb_mst_mitra tmm2', 'tmm2.id = tm.id_mitra');
+      $table->join('tb_mst_lembaga tml', 'tml.id = tmm2.id_lembaga');
       $this->searchData($table, $post);
       $table->orderBy('tm.id', 'desc');
       $table->limit((int) $post['limit'], (int) $post['offset']);
@@ -89,7 +89,6 @@ class Mitra extends Model
       $table = $this->db->table('tb_mitra tm');
       $table->join('tb_mst_jenis_mou tmjm', 'tmjm.id = tm.id_jenis_mou');
       $table->join('tb_mst_mou tmm', 'tmm.id = tm.id_mou');
-      $table->join('tb_mst_lembaga tml', 'tml.id = tm.id_lembaga');
       $table->join('tb_mst_mitra tmm2', 'tmm2.id = tm.id_mitra');
 
       return $table->countAllResults();
@@ -97,13 +96,7 @@ class Mitra extends Model
 
    private function searchData($table, array $post)
    {
-      $column_search = [
-         'tmm2.nama',
-         'tm.nomor_dokumen',
-         'tmjm.nama',
-         'tmm.nama',
-         'tml.nama'
-      ];
+      $column_search = ['tmm.nama', 'tmm2.nama', 'tml.nama', 'tm.nomor_dokumen'];
 
       $i = 0;
       foreach ($column_search as $item) {
@@ -127,7 +120,6 @@ class Mitra extends Model
    {
       return [
          'daftarMoU' => $this->getDaftarMoU(),
-         'daftarLembaga' => $this->getDaftarLembaga(),
          'daftarJenisMoU' => $this->getDaftarJenisMou(),
          'daftarMitra' => $this->getDaftarMitra()
       ];
@@ -135,9 +127,10 @@ class Mitra extends Model
 
    private function getDaftarMitra(): array
    {
-      $table = $this->db->table('tb_mst_mitra');
-      $table->select('id as value, nama as label');
-      $table->orderBy('nama');
+      $table = $this->db->table('tb_mst_mitra tmm');
+      $table->select('tmm.id as value, tmm.nama || \' - \' || tml.nama as label');
+      $table->join('tb_mst_lembaga tml', 'tml.id = tmm.id_lembaga');
+      $table->orderBy('tmm.nama');
 
       $get = $table->get();
       $result = $get->getResultArray();
@@ -156,26 +149,6 @@ class Mitra extends Model
    private function getDaftarJenisMou(): array
    {
       $table = $this->db->table('tb_mst_jenis_mou');
-      $table->select('id as value, nama as label');
-      $table->orderBy('nama');
-
-      $get = $table->get();
-      $result = $get->getResultArray();
-      $fieldNames = $get->getFieldNames();
-      $get->freeResult();
-
-      $response = [];
-      foreach ($result as $key => $val) {
-         foreach ($fieldNames as $field) {
-            $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
-         }
-      }
-      return $response;
-   }
-
-   private function getDaftarLembaga(): array
-   {
-      $table = $this->db->table('tb_mst_lembaga');
       $table->select('id as value, nama as label');
       $table->orderBy('nama');
 

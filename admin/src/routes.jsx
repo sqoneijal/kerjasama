@@ -30,6 +30,14 @@ const BeritaDalamNegeriForms = React.lazy(() => import("./views/berita/dalamnege
 const BeritaLuarNegeri = React.lazy(() => import("./views/berita/luarnegeri/Page"));
 const BeritaLuarNegeriForms = React.lazy(() => import("./views/berita/luarnegeri/Forms"));
 
+// tindak lanjut
+const TindakLanjut = React.lazy(() => import("./views/tindaklanjut/Page"));
+const TindakLanjutForms = React.lazy(() => import("./views/tindaklanjut/Forms"));
+
+// tindak lanjut
+const RuangLingkup = React.lazy(() => import("./views/ruanglingkup/Page"));
+const RuangLingkupForms = React.lazy(() => import("./views/ruanglingkup/Forms"));
+
 const routes = [
    { path: "/dashboard", name: "Dashboard", element: Dashboard },
    { path: "/referensi", name: "Referensi", element: ReferensiLayananList },
@@ -54,6 +62,10 @@ const routes = [
    { path: "/berita/dalamnegeri/forms", name: "Forms", element: BeritaDalamNegeriForms },
    { path: "/berita/luarnegeri", name: "Luar Negeri", element: BeritaLuarNegeri },
    { path: "/berita/luarnegeri/forms", name: "Forms", element: BeritaLuarNegeriForms },
+   { path: "/tindaklanjut", name: "Tindak Lanjut", element: TindakLanjut },
+   { path: "/tindaklanjut/forms", name: "Forms", element: TindakLanjutForms },
+   { path: "/ruanglingkup", name: "Ruang Lingkup", element: RuangLingkup },
+   { path: "/ruanglingkup/forms", name: "Forms", element: RuangLingkupForms },
 ];
 
 export default routes;

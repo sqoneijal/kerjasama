@@ -7,6 +7,38 @@ use CodeIgniter\Database\RawSql;
 
 class Mitra extends Common
 {
+
+   public function getDropdown(): array
+   {
+      return [
+         'daftarLembaga' => $this->getDaftarLembaga(),
+         'daftarAsalMitra' => [
+            ['label' => 'Dalam Negeri', 'value' => 'dalamnegeri'],
+            ['label' => 'Luar Negeri', 'value' => 'luarnegeri'],
+         ]
+      ];
+   }
+
+   private function getDaftarLembaga(): array
+   {
+      $table = $this->db->table('tb_mst_lembaga');
+      $table->select('id as value, nama as label');
+      $table->orderBy('nama');
+
+      $get = $table->get();
+      $result = $get->getResultArray();
+      $fieldNames = $get->getFieldNames();
+      $get->freeResult();
+
+      $response = [];
+      foreach ($result as $key => $val) {
+         foreach ($fieldNames as $field) {
+            $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
+         }
+      }
+      return $response;
+   }
+
    public function hapus(array $post): array
    {
       try {
@@ -23,7 +55,7 @@ class Mitra extends Common
    public function submit(array $post): array
    {
       try {
-         $fields = ['nama', 'keterangan'];
+         $fields = ['nama', 'id_lembaga', 'asal_mitra', 'alamat', 'website'];
          foreach ($fields as $field) {
             if (@$post[$field]) {
                $data[$field] = $post[$field];
@@ -53,10 +85,11 @@ class Mitra extends Common
 
    public function getData(array $post): array
    {
-      $table = $this->db->table('tb_mst_mitra');
-      $table->select('id, nama, keterangan');
+      $table = $this->db->table('tb_mst_mitra tmm');
+      $table->select('tmm.*, tml.nama as jenis_mitra');
+      $table->join('tb_mst_lembaga tml', 'tml.id = tmm.id_lembaga', 'left');
       $this->searchData($table, $post);
-      $table->orderBy('id', 'desc');
+      $table->orderBy('tmm.id', 'desc');
       $table->limit((int) $post['limit'], (int) $post['offset']);
 
       $get = $table->get();
@@ -69,6 +102,8 @@ class Mitra extends Common
          foreach ($fieldNames as $field) {
             $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
          }
+
+         $response[$key]['jwt'] = $this->generateJWT($val, 'id');
       }
 
       return [
@@ -79,7 +114,7 @@ class Mitra extends Common
 
    private function searchData($table, array $post)
    {
-      $column_search = ['nama', 'keterangan'];
+      $column_search = ['tmm.nama', 'tml.nama'];
 
       $i = 0;
       foreach ($column_search as $item) {

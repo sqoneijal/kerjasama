@@ -11,6 +11,14 @@ class Mitra
             'rules' => 'required',
             'label' => 'Nama mitra'
          ],
+         'id_lembaga' => [
+            'rules' => 'required',
+            'label' => 'Jenis mitra'
+         ],
+         'asal_mitra' => [
+            'rules' => 'required',
+            'label' => 'Negara/Asal Mitra'
+         ],
       ];
    }
 }

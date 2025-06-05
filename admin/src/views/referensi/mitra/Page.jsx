@@ -1,5 +1,5 @@
 import { setModule } from "@/redux";
-import { post } from "@helpers";
+import { decodeJWT, post } from "@helpers";
 import { Grid, html } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
 import { useLayoutEffect, useRef } from "react";
@@ -18,7 +18,7 @@ export default function Page() {
    const handleEdit = (e) => {
       e.preventDefault();
       const json = e.target.dataset.json;
-      dispatch(setModule({ ...module, pageType: "update", dataUpdate: JSON.parse(decodeURIComponent(json)) }));
+      dispatch(setModule({ ...module, pageType: "update", dataUpdate: decodeJWT(json) }));
       navigate("/referensi/mitra/forms");
    };
 
@@ -75,6 +75,11 @@ export default function Page() {
       handleDelete(id);
    };
 
+   const renderAsalMitra = {
+      dalamnegeri: "Dalam Negeri",
+      luarnegeri: "Luar Negeri",
+   };
+
    useLayoutEffect(() => {
       dispatch(
          setModule({
@@ -94,17 +99,23 @@ export default function Page() {
                name: "Nama Mitra",
                data: (row) => {
                   return html(
-                     `<strong>${row.nama}</strong>
+                     `<strong><a href="${row.website ? row.website : "#"}" style="text-decoration: none; color: #000;" target="_blank">
+                        ${row.nama}
+                     </a></strong>
                      <div class="row-actions">
-                        <span class="edit"><a href="" id="edit" data-json='${encodeURIComponent(JSON.stringify(row))}'>Edit</a> | </span>
+                        <span class="edit"><a href="" id="edit" data-json='${row.jwt}'>Edit</a> | </span>
                         <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
                      </div>`
                   );
                },
             },
             {
-               name: "Keterangan",
-               data: (row) => row.keterangan,
+               name: "Jenis Mitra",
+               data: (row) => row.jenis_mitra,
+            },
+            {
+               name: "Negara/Asal Mitra",
+               data: (row) => renderAsalMitra[row.asal_mitra],
             },
          ],
          server: {

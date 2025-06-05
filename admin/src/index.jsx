@@ -19,3 +19,5 @@ createRoot(document.getElementById("root")).render(
       </BrowserRouter>
    </Provider>
 );
+
+new EventSource("/esbuild").addEventListener("change", () => location.reload());

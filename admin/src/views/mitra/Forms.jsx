@@ -59,7 +59,6 @@ export default function Forms() {
             selectedDropdown: {
                ...prev.selectedDropdown,
                id_mou: filterByValue(state.dropdown.daftarMoU, dataUpdate.id_mou),
-               id_lembaga: filterByValue(state.dropdown.daftarLembaga, dataUpdate.id_lembaga),
                id_mitra: filterByValue(state.dropdown.daftarMitra, dataUpdate.id_mitra),
             },
          }));
@@ -164,16 +163,6 @@ export default function Forms() {
                         errors={state.errors}
                         onChange={(e) => setState({ ...state, input: { ...state.input, nomor_dokumen: e.target.value } })}
                         value={state.input.nomor_dokumen || ""}
-                     />
-                  </Col>
-                  <Col md={3} sm={12}>
-                     <FormTypeahead
-                        name="id_lembaga"
-                        label="Lembaga"
-                        options={state.dropdown.daftarLembaga}
-                        selected={getSelectedDropdown("id_lembaga")}
-                        onChange={(item) => handleChangeDropdown(item, "id_lembaga")}
-                        errors={state.errors}
                      />
                   </Col>
                   <Col md={3} sm={12}>
