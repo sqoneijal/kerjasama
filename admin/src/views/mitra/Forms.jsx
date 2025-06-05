@@ -53,13 +53,14 @@ export default function Forms() {
    useEffect(() => {
       loadDropdown();
       if (pageType === "update" && Object.keys(dataUpdate).length > 0 && !isLoadingGetDropdown) {
-         setState((prev) => ({ ...prev, input: dataUpdate }));
          setState((prev) => ({
             ...prev,
+            input: dataUpdate,
             selectedDropdown: {
                ...prev.selectedDropdown,
                id_mou: filterByValue(state.dropdown.daftarMoU, dataUpdate.id_mou),
                id_lembaga: filterByValue(state.dropdown.daftarLembaga, dataUpdate.id_lembaga),
+               id_mitra: filterByValue(state.dropdown.daftarMitra, dataUpdate.id_mitra),
             },
          }));
       }
@@ -107,19 +108,14 @@ export default function Forms() {
    };
 
    const handleChangeDropdown = (data, name) => {
-      if (data.length > 0) {
-         setState((prev) => ({
-            ...prev,
-            input: { ...prev.input, [name]: data[0].value },
-            selectedDropdown: { ...state.selectedDropdown, [name]: data },
-         }));
-      } else {
-         setState((prev) => ({
-            ...prev,
-            input: { ...prev.input, [name]: "" },
-            selectedDropdown: { ...state.selectedDropdown, [name]: [] },
-         }));
-      }
+      const dataValue = data.length > 0 ? data[0].value : "";
+      const dataSelected = data.length > 0 ? data : [];
+
+      setState((prev) => ({
+         ...prev,
+         input: { ...prev.input, [name]: dataValue },
+         selectedDropdown: { ...state.selectedDropdown, [name]: dataSelected },
+      }));
    };
 
    const getSelectedDropdown = (name) => {
@@ -150,12 +146,13 @@ export default function Forms() {
                      />
                   </Col>
                   <Col>
-                     <FormText
+                     <FormTypeahead
+                        name="id_mitra"
                         label="Nama Mitra"
-                        name="nama_mitra"
+                        options={state.dropdown.daftarMitra}
+                        selected={getSelectedDropdown("id_mitra")}
+                        onChange={(item) => handleChangeDropdown(item, "id_mitra")}
                         errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, nama_mitra: e.target.value } })}
-                        value={state.input.nama_mitra || ""}
                      />
                   </Col>
                </Row>
@@ -238,7 +235,7 @@ export default function Forms() {
                <Row className="justify-content-md-center">
                   <h5>Dokumen</h5>
                   <Col md={12}>
-                     <DropzoneUpload onFileSelect={handleFile} existsFileName={"awjefhgakwjhgfkwef"} />
+                     <DropzoneUpload onFileSelect={handleFile} />
                   </Col>
                   <Col md={2} sm={12}>
                      <FormSelect

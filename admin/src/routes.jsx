@@ -5,6 +5,8 @@ const Dashboard = React.lazy(() => import("./views/dashboard/Page"));
 // Referensi
 const ReferensiLayananList = React.lazy(() => import("./views/referensi/layanan/Page"));
 const ReferensiLayananForms = React.lazy(() => import("./views/referensi/layanan/Forms"));
+const ReferensiMitra = React.lazy(() => import("./views/referensi/mitra/Page"));
+const ReferensiMitraForms = React.lazy(() => import("./views/referensi/mitra/Forms"));
 const ReferensiLayananJenisMoU = React.lazy(() => import("./views/referensi/jenismou/Page"));
 const ReferensiLayananJenisMoUForms = React.lazy(() => import("./views/referensi/jenismou/Forms"));
 const ReferensiLayananMoU = React.lazy(() => import("./views/referensi/mou/Page"));
@@ -39,6 +41,8 @@ const routes = [
    { path: "/referensi/mou/forms", name: "Forms", element: ReferensiLayananMoUForms },
    { path: "/referensi/lembaga", name: "Lembaga", element: ReferensiLayananLembaga },
    { path: "/referensi/lembaga/forms", name: "Forms", element: ReferensiLayananLembagaForms },
+   { path: "/referensi/mitra", name: "Mitra", element: ReferensiMitra },
+   { path: "/referensi/mitra/forms", name: "Forms", element: ReferensiMitraForms },
    { path: "/tentang", name: "Tentang", element: TentangProfile },
    { path: "/tentang/profil", name: "Profile", element: TentangProfile },
    { path: "/tentang/strukturorganisasi", name: "Struktur Organisasi", element: TentangStrukturOrganisasi },

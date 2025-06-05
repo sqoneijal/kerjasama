@@ -52,7 +52,7 @@ class Mitra extends BaseController
 
             $file_mou = $this->request->getFile('file_mou');
             if ($file_mou) {
-               $driveUpload = $this->handleUploadToGoogleDrive($file_mou, url_title($post['nama_mitra'], '-', true));
+               $driveUpload = $this->handleUploadToGoogleDrive($file_mou, url_title($post['id_mitra'], '-', true));
                if ($driveUpload) {
                   $post['id_dokumen'] = $driveUpload->id;
                   $post['nama_dokumen'] = $file_mou->getClientName();

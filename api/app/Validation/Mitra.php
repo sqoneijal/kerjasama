@@ -16,7 +16,7 @@ class Mitra
             'label' => 'MoU',
             'rules' => 'required'
          ],
-         'nama_mitra' => [
+         'id_mitra' => [
             'label' => 'Nama mitra',
             'rules' => 'required'
          ],

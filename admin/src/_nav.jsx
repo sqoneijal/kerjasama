@@ -35,6 +35,11 @@ const _nav = [
             name: "Lembaga",
             href: "/referensi/lembaga",
          },
+         {
+            component: CNavItem,
+            name: "Mitra",
+            href: "/referensi/mitra",
+         },
       ],
    },
    {
