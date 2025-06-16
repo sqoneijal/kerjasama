@@ -13,6 +13,8 @@ const ReferensiLayananMoU = React.lazy(() => import("./views/referensi/mou/Page"
 const ReferensiLayananMoUForms = React.lazy(() => import("./views/referensi/mou/Forms"));
 const ReferensiLayananLembaga = React.lazy(() => import("./views/referensi/lembaga/Page"));
 const ReferensiLayananLembagaForms = React.lazy(() => import("./views/referensi/lembaga/Forms"));
+const ReferensiBidangKerjasama = React.lazy(() => import("./views/referensi/bidangkerjasama/Page"));
+const ReferensiBidangKerjasamaForms = React.lazy(() => import("./views/referensi/bidangkerjasama/Forms"));
 
 // Tentang
 const TentangProfile = React.lazy(() => import("./views/tentang/Profile"));
@@ -34,10 +36,6 @@ const BeritaLuarNegeriForms = React.lazy(() => import("./views/berita/luarnegeri
 const TindakLanjut = React.lazy(() => import("./views/tindaklanjut/Page"));
 const TindakLanjutForms = React.lazy(() => import("./views/tindaklanjut/Forms"));
 
-// tindak lanjut
-const RuangLingkup = React.lazy(() => import("./views/ruanglingkup/Page"));
-const RuangLingkupForms = React.lazy(() => import("./views/ruanglingkup/Forms"));
-
 const routes = [
    { path: "/dashboard", name: "Dashboard", element: Dashboard },
    { path: "/referensi", name: "Referensi", element: ReferensiLayananList },
@@ -51,6 +49,8 @@ const routes = [
    { path: "/referensi/lembaga/forms", name: "Forms", element: ReferensiLayananLembagaForms },
    { path: "/referensi/mitra", name: "Mitra", element: ReferensiMitra },
    { path: "/referensi/mitra/forms", name: "Forms", element: ReferensiMitraForms },
+   { path: "/referensi/bidangkerjasama", name: "Bidang Kerja Sama", element: ReferensiBidangKerjasama },
+   { path: "/referensi/bidangkerjasama/forms", name: "Forms", element: ReferensiBidangKerjasamaForms },
    { path: "/tentang", name: "Tentang", element: TentangProfile },
    { path: "/tentang/profil", name: "Profile", element: TentangProfile },
    { path: "/tentang/strukturorganisasi", name: "Struktur Organisasi", element: TentangStrukturOrganisasi },
@@ -64,8 +64,6 @@ const routes = [
    { path: "/berita/luarnegeri/forms", name: "Forms", element: BeritaLuarNegeriForms },
    { path: "/tindaklanjut", name: "Tindak Lanjut", element: TindakLanjut },
    { path: "/tindaklanjut/forms", name: "Forms", element: TindakLanjutForms },
-   { path: "/ruanglingkup", name: "Ruang Lingkup", element: RuangLingkup },
-   { path: "/ruanglingkup/forms", name: "Forms", element: RuangLingkupForms },
 ];
 
 export default routes;

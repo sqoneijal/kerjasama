@@ -4,7 +4,7 @@
    "scripts": {
       "build:scss": "sass --load-path=node_modules src/scss/style.scss:src/scss/style.css",
       "build:tinymce": "node ./postinstall.js",
-      "dev": "esbuild ./src/index.jsx --bundle --sourcemap --jsx=automatic --alias:@=./src/ --alias:@components=./src/components/ --alias:@helpers=./src/helpers --loader:.css=css --loader:.svg=dataurl --loader:.webp=dataurl --loader:.eot=dataurl --loader:.png=dataurl --loader:.jpg=dataurl --loader:.woff=dataurl --loader:.woff2=dataurl --loader:.scss=dataurl --loader:.ttf=dataurl --outdir=./bundle --servedir=./ --watch --serve-fallback=index.html",
+      "dev": "esbuild --define:process.env.NODE_ENV=\\\"development\\\" ./src/index.jsx --bundle --sourcemap --jsx=automatic --alias:@=./src/ --alias:@components=./src/components/ --alias:@helpers=./src/helpers --loader:.css=css --loader:.svg=dataurl --loader:.webp=dataurl --loader:.eot=dataurl --loader:.png=dataurl --loader:.jpg=dataurl --loader:.woff=dataurl --loader:.woff2=dataurl --loader:.scss=dataurl --loader:.ttf=dataurl --outdir=./bundle --servedir=./ --watch --serve-fallback=index.html",
       "clean": "node clean.js",
       "build": "npm run clean && node esbuild.config.js && node prod.js"
    },

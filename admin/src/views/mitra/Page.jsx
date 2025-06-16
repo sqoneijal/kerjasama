@@ -127,18 +127,22 @@ export default function MitraPage() {
       const grid = new Grid({
          columns: [
             {
-               name: "MoU",
+               name: "Judul Kegiatan",
                data: (row) => {
                   const dataJson = row ? encodeURIComponent(JSON.stringify(row)) : "";
 
                   return html(
-                     `<strong>${row.mou}</strong>
+                     `<strong>${row.judul_kegiatan}</strong>
                      <div class="row-actions">
                         <span class="edit"><a href="" id="edit" data-json='${dataJson}'>Edit</a> | </span>
                         <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
                      </div>`
                   );
                },
+            },
+            {
+               name: "MoU",
+               data: (row) => row.mou,
             },
             {
                name: "Mitra",

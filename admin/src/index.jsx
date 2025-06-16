@@ -20,4 +20,6 @@ createRoot(document.getElementById("root")).render(
    </Provider>
 );
 
-new EventSource("/esbuild").addEventListener("change", () => location.reload());
+if (process.env.NODE_ENV === "development") {
+   new EventSource("/esbuild").addEventListener("change", () => location.reload());
+}

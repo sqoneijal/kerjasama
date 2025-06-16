@@ -39,7 +39,31 @@ class Mitra
          'status_dokumen' => [
             'label' => 'Status dokumen',
             'rules' => @$post['nama_dokumen'] ? 'required' : 'permit_empty'
-         ]
+         ],
+         'tingkat' => [
+            'label' => 'Tingkat kerjasama',
+            'rules' => 'required'
+         ],
+         'id_fakultas' => [
+            'label' => 'Fakultas',
+            'rules' => @$post['tingkat'] === 'fakultas' ? 'required|valid_json' : 'permit_empty'
+         ],
+         'id_prodi' => [
+            'label' => 'Program studi',
+            'rules' => @$post['tingkat'] === 'prodi' ? 'required|valid_json' : 'permit_empty'
+         ],
+         'unit_penanggung_jawab' => [
+            'label' => 'Unit penanggung jawab',
+            'rules' => 'required'
+         ],
+         'tujuan_kerjasama' => [
+            'label' => 'Tujuan kerja sama',
+            'rules' => 'required'
+         ],
+         'judul_kegiatan' => [
+            'label' => 'Judul kegiatan',
+            'rules' => 'required'
+         ],
       ];
    }
 }

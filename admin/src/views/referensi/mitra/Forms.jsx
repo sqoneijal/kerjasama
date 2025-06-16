@@ -2,7 +2,7 @@ import { setModule } from "@/redux";
 import { CSpinner } from "@coreui/react";
 import { FormSelect, FormText, FormTypeahead, get, post } from "@helpers";
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Form, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -78,8 +78,8 @@ export default function Forms() {
             setState((prev) => ({ ...prev, errors: data.errors }));
 
             if (data.status) {
-               navigate("/referensi/mitra");
                toast.success(data.message);
+               navigate("/referensi/mitra");
             } else {
                toast.error(data.message);
             }
@@ -114,57 +114,52 @@ export default function Forms() {
          <Card className="shadow-sm">
             <Card.Body>
                <Row>
-                  <Col md={8} sm={12}>
-                     <FormText
-                        label="Nama Mitra"
-                        name="nama"
-                        errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, nama: e.target.value } })}
-                        value={state.input.nama || ""}
-                     />
-                  </Col>
-                  <Col md={4} sm={12}>
-                     <FormTypeahead
-                        name="id_lembaga"
-                        label="Jenis Mitra"
-                        options={state.dropdown.daftarLembaga}
-                        selected={getSelectedDropdown("id_lembaga")}
-                        onChange={(item) => handleChangeDropdown(item, "id_lembaga")}
-                        errors={state.errors}
-                     />
-                  </Col>
+                  <FormText
+                     label="Nama Mitra"
+                     name="nama"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, nama: e.target.value } })}
+                     value={state.input.nama || ""}
+                     col={{ md: 8, sm: 12 }}
+                  />
+                  <FormTypeahead
+                     name="id_lembaga"
+                     label="Jenis Mitra"
+                     options={state.dropdown.daftarLembaga}
+                     selected={getSelectedDropdown("id_lembaga")}
+                     onChange={(item) => handleChangeDropdown(item, "id_lembaga")}
+                     errors={state.errors}
+                     col={{ md: 4, sm: 12 }}
+                  />
                </Row>
                <Row>
-                  <Col md={2} sm={12}>
-                     <FormSelect
-                        name="asal_mitra"
-                        label="Negara/Asal Mitra"
-                        options={state.dropdown.daftarAsalMitra}
-                        errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, asal_mitra: e.target.value } })}
-                        value={state.input.asal_mitra || ""}
-                     />
-                  </Col>
-                  <Col md={10} sm={12}>
-                     <FormText
-                        label="Alamat Mitra"
-                        name="alamat"
-                        errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, alamat: e.target.value } })}
-                        value={state.input.alamat || ""}
-                     />
-                  </Col>
+                  <FormSelect
+                     name="asal_mitra"
+                     label="Negara/Asal Mitra"
+                     options={state.dropdown.daftarAsalMitra}
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, asal_mitra: e.target.value } })}
+                     value={state.input.asal_mitra || ""}
+                     col={{ md: 2 }}
+                  />
+                  <FormText
+                     label="Alamat Mitra"
+                     name="alamat"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, alamat: e.target.value } })}
+                     value={state.input.alamat || ""}
+                     col={{ md: 10 }}
+                  />
                </Row>
                <Row>
-                  <Col md={3} sm={12}>
-                     <FormText
-                        label="Website Mitra"
-                        name="website"
-                        errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, website: e.target.value } })}
-                        value={state.input.website || ""}
-                     />
-                  </Col>
+                  <FormText
+                     label="Website Mitra"
+                     name="website"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, website: e.target.value } })}
+                     value={state.input.website || ""}
+                     col={{ md: 3 }}
+                  />
                </Row>
             </Card.Body>
             <Card.Footer>

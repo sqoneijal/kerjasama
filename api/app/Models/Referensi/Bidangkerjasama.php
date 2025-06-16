@@ -5,13 +5,12 @@ namespace App\Models\Referensi;
 use App\Models\Common;
 use CodeIgniter\Database\RawSql;
 
-class Jenismou extends Common
+class Bidangkerjasama extends Common
 {
-
    public function hapus(array $post): array
    {
       try {
-         $table = $this->db->table('tb_mst_jenis_mou');
+         $table = $this->db->table('tb_mst_bidang_kerjasama');
          $table->where('id', $post['id']);
          $table->delete();
          return ['status' => true, 'message' => 'Data berhasil dihapus.'];
@@ -23,7 +22,7 @@ class Jenismou extends Common
    public function submit(array $post): array
    {
       try {
-         $fields = ['nama', 'keterangan'];
+         $fields = ['nama'];
          foreach ($fields as $field) {
             if (@$post[$field]) {
                $data[$field] = $post[$field];
@@ -34,7 +33,7 @@ class Jenismou extends Common
 
          $data['modified_by'] = @$post['user_modified'];
 
-         $table = $this->db->table('tb_mst_jenis_mou');
+         $table = $this->db->table('tb_mst_bidang_kerjasama');
          if ($post['pageType'] === 'update') {
             $data['update_at'] = new RawSql('now()');
 
@@ -53,7 +52,7 @@ class Jenismou extends Common
 
    public function getData(): array
    {
-      $table = $this->db->table('tb_mst_jenis_mou');
+      $table = $this->db->table('tb_mst_bidang_kerjasama');
       $table->orderBy('id', 'desc');
 
       $get = $table->get();
@@ -66,6 +65,8 @@ class Jenismou extends Common
          foreach ($fieldNames as $field) {
             $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
          }
+
+         $response[$key]['jwt'] = $this->generateJWT($val);
       }
       return $response;
    }
