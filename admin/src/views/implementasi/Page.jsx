@@ -1,15 +1,16 @@
 import { setModule } from "@/redux";
-import { post } from "@helpers";
+import { decodeJWT, post } from "@helpers";
 import { Grid, html } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
-import moment from "moment/moment";
+import moment from "moment";
 import { useLayoutEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+moment.locale("id");
 
-export default function MitraPage() {
+export default function Page() {
    const { module, init } = useSelector((e) => e.redux);
    const dispatch = useDispatch();
    const gridWrapper = useRef(null);
@@ -19,8 +20,8 @@ export default function MitraPage() {
    const handleEdit = (e) => {
       e.preventDefault();
       const json = e.target.dataset.json;
-      dispatch(setModule({ ...module, pageType: "update", dataUpdate: JSON.parse(decodeURIComponent(json)) }));
-      navigate("/mitra/forms");
+      dispatch(setModule({ ...module, pageType: "update", dataUpdate: decodeJWT(json) }));
+      navigate("/implementasi/forms");
    };
 
    const reloadGrid = () => {
@@ -56,7 +57,7 @@ export default function MitraPage() {
          confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
          if (result.isConfirmed) {
-            const res = await post("/mitra/hapus", { id }, { headers: { ...init.token } });
+            const res = await post("/implementasi/hapus", { id }, { headers: { ...init.token } });
             processDeleteResponse(res);
          }
       });
@@ -76,41 +77,6 @@ export default function MitraPage() {
       handleDelete(id);
    };
 
-   const renderTanggalKerjasama = (row) => {
-      return row.is_tak_terhingga === "t"
-         ? `${moment(row.tanggal_mulai).format("DD/MM/YYYY")} - Tak Terbatas`
-         : `${moment(row.tanggal_mulai).format("DD/MM/YYYY")} - ${moment(row.tanggal_berakhir).format("DD/MM/YYYY")}`;
-   };
-
-   const renderStatus = (row) => {
-      if (row.is_tak_terhingga === "t") {
-         return `Aktif`;
-      }
-
-      const awal = moment(row.tanggal_mulai);
-      const akhir = moment(row.tanggal_berakhir);
-
-      const diff = akhir.diff(awal, "days");
-      if (diff < 0) {
-         return `Tidak Aktif`;
-      } else if (diff <= 30) {
-         return `Akan Berakhir ${diff} Hari Lagi`;
-      } else {
-         return `Aktif`;
-      }
-   };
-
-   const renderNomor = (row) => {
-      return `
-         ${row.nomor_dokumen}
-         ${
-            row.nama_dokumen
-               ? `<br /><a href="https://drive.google.com/file/d/${row.id_dokumen}/view?usp=drive_link" target="_blank" style="font-size: 12px;">${row.nama_dokumen}</a>`
-               : ""
-         }
-         `;
-   };
-
    useLayoutEffect(() => {
       dispatch(
          setModule({
@@ -119,7 +85,7 @@ export default function MitraPage() {
             pageButton: {
                variant: "primary",
                label: "Tambah Data",
-               href: "/mitra/forms",
+               href: "/implementasi/forms",
             },
          })
       );
@@ -127,48 +93,43 @@ export default function MitraPage() {
       const grid = new Grid({
          columns: [
             {
-               name: "Judul Kegiatan",
+               name: "Kegiatan",
                data: (row) => {
-                  const dataJson = row ? encodeURIComponent(JSON.stringify(row)) : "";
-
                   return html(
                      `<strong>${row.judul_kegiatan}</strong>
                      <div class="row-actions">
-                        <span class="edit"><a href="" id="edit" data-json='${dataJson}'>Edit</a> | </span>
+                        <span class="edit"><a href="" id="edit" data-json="${row.jwt}">Edit</a> | </span>
                         <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
                      </div>`
                   );
                },
             },
             {
-               name: "MoU",
-               data: (row) => row.mou,
-            },
-            {
                name: "Mitra",
-               data: (row) => row.nama_mitra,
+               data: (row) => {
+                  return html(
+                     `${row.nama}<br/>${row.nomor_dokumen}<br/><a href="https://drive.google.com/file/d/${row.id_dokumen}/view?usp=drive_link" target="_blank" style="font-size: 12px;">thunder-file_da3e7a72.json</a>`
+                  );
+               },
             },
             {
-               name: "Nomor",
-               data: (row) => html(renderNomor(row)),
+               name: "Tanggal Pelaksanaan",
+               data: (row) => moment(row.tgl_pelaksanaan).format("DD MMMM YYYY"),
             },
             {
-               name: "Lembaga",
-               data: (row) => row.nama_lembaga,
-            },
-            {
-               name: "Tanggal Kerjasama",
-               data: (row) => renderTanggalKerjasama(row),
-            },
-            {
-               name: "Status",
-               data: (row) => renderStatus(row),
+               name: "Status Evaluasi",
+               data: (row) => {
+                  const statusEvaluasi = {
+                     sudah: "Sudah Evaluasi",
+                     belum: "Belum Evaluasi",
+                  };
+                  return statusEvaluasi[row.status_evaluasi];
+               },
             },
          ],
          server: {
-            url: `${window.apiUrl}/mitra/getdata`,
-            then: (data) => data.result,
-            total: (data) => data.total,
+            url: `${window.apiUrl}/implementasi/getdata`,
+            then: (data) => data.results,
             headers: { ...init.token },
          },
          search: {

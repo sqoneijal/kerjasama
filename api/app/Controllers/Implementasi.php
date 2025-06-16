@@ -3,10 +3,10 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Tindaklanjut as Model;
-use App\Validation\Tindaklanjut as Validate;
+use App\Models\Implementasi as Model;
+use App\Validation\Implementasi as Validate;
 
-class Tindaklanjut extends BaseController
+class Implementasi extends BaseController
 {
    public function getDropdown()
    {
@@ -22,7 +22,7 @@ class Tindaklanjut extends BaseController
       $validation = new Validate();
       if ($this->validate($validation->submit())) {
          $model = new Model();
-         $submit = $model->submit($this->post);
+         $submit = $model->submit($this->request->getPost());
 
          $response = array_merge($submit, ['errors' => []]);
       } else {
@@ -30,5 +30,19 @@ class Tindaklanjut extends BaseController
          $response['errors'] = \Config\Services::validation()->getErrors();
       }
       return $this->respond($response);
+   }
+
+   public function getData()
+   {
+      $model = new Model();
+      $content = $model->getData($this->request->getGet());
+      return $this->respondCreated($content);
+   }
+
+   public function hapus()
+   {
+      $model = new Model();
+      $content = $model->hapus($this->request->getPost());
+      return $this->respondCreated($content);
    }
 }

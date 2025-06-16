@@ -27,7 +27,7 @@ const _nav = [
          },
          {
             component: CNavItem,
-            name: "MoU",
+            name: "Naskah Kerjasama",
             href: "/referensi/mou",
          },
          {
@@ -79,8 +79,8 @@ const _nav = [
    },
    {
       component: CNavItem,
-      name: "Tindak Lanjut",
-      href: "/tindaklanjut",
+      name: "Implementasi",
+      href: "/implementasi",
       icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
    },
    {

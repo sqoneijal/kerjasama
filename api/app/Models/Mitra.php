@@ -93,7 +93,7 @@ class Mitra extends Common
 
       $this->deleteRuangLingkup($table, $id_ruang_lingkup);
 
-      $id_prodi = json_decode($post['id_prodi'], true);
+      $id_prodi = json_decode(@$post['id_prodi'], true);
 
       if (empty($id_prodi)) {
          return;
@@ -120,7 +120,7 @@ class Mitra extends Common
 
       $this->deleteRuangLingkup($table, $id_ruang_lingkup);
 
-      $id_fakultas = json_decode($post['id_fakultas'], true);
+      $id_fakultas = json_decode(@$post['id_fakultas'], true);
 
       if (empty($id_fakultas)) {
          return;
@@ -147,7 +147,7 @@ class Mitra extends Common
 
       $this->deleteRuangLingkup($table, $id_ruang_lingkup);
 
-      $bidang_kerjasama = json_decode($post['bidang_kerjasama'], true);
+      $bidang_kerjasama = json_decode(@$post['bidang_kerjasama'], true);
 
       if (empty($bidang_kerjasama)) {
          return;

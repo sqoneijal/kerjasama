@@ -16,6 +16,16 @@ class Common extends Model
         $this->db = \Config\Database::connect();
     }
 
+    public function validateUser(array $post): bool
+    {
+        $table = $this->db->table('tb_users');
+        $table->where('username', (string) $post['username']);
+
+        $count = $table->countAllResults();
+
+        return $count > 0 ? true : false;
+    }
+
     public function generateJWT(array $data): string
     {
         return JWT::encode($data, 'kerjasama', 'HS256');

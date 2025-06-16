@@ -33,8 +33,8 @@ const BeritaLuarNegeri = React.lazy(() => import("./views/berita/luarnegeri/Page
 const BeritaLuarNegeriForms = React.lazy(() => import("./views/berita/luarnegeri/Forms"));
 
 // tindak lanjut
-const TindakLanjut = React.lazy(() => import("./views/tindaklanjut/Page"));
-const TindakLanjutForms = React.lazy(() => import("./views/tindaklanjut/Forms"));
+const Implementasi = React.lazy(() => import("./views/implementasi/Page"));
+const ImplementasiForms = React.lazy(() => import("./views/implementasi/Forms"));
 
 const routes = [
    { path: "/dashboard", name: "Dashboard", element: Dashboard },
@@ -62,8 +62,8 @@ const routes = [
    { path: "/berita/dalamnegeri/forms", name: "Forms", element: BeritaDalamNegeriForms },
    { path: "/berita/luarnegeri", name: "Luar Negeri", element: BeritaLuarNegeri },
    { path: "/berita/luarnegeri/forms", name: "Forms", element: BeritaLuarNegeriForms },
-   { path: "/tindaklanjut", name: "Tindak Lanjut", element: TindakLanjut },
-   { path: "/tindaklanjut/forms", name: "Forms", element: TindakLanjutForms },
+   { path: "/implementasi", name: "Implementasi", element: Implementasi },
+   { path: "/implementasi/forms", name: "Forms", element: ImplementasiForms },
 ];
 
 export default routes;
