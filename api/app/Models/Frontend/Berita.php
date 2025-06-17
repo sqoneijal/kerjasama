@@ -7,6 +7,32 @@ use App\Models\Common;
 class Berita extends Common
 {
 
+   public function getData(array $post): array
+   {
+      helper('text');
+
+      $table = $this->db->table('tb_berita');
+      $table->orderBy('id', 'desc');
+      $table->limit(5, (int) $post['page'] * 5);
+
+      $get = $table->get();
+      $result = $get->getResultArray();
+      $fieldNames = $get->getFieldNames();
+      $get->freeResult();
+
+      $response = [];
+      foreach ($result as $key => $val) {
+         foreach ($fieldNames as $field) {
+            if ($field === 'content') {
+               $response[$key][$field] = word_limiter(strip_tags(html_entity_decode($val[$field])), 33);
+            } else {
+               $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
+            }
+         }
+      }
+      return $response;
+   }
+
    public function getDetailBerita(string $slug): array
    {
       $detailBerita = $this->getDetailBeritaBySlug($slug);
