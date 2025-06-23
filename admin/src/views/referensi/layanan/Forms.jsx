@@ -1,7 +1,7 @@
 import { setModule } from "@/redux";
 import { FormText, FormTextarea, post } from "@helpers";
 import { useEffect, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Form, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -82,20 +82,26 @@ export default function Forms() {
       <Form onSubmit={handleSubmit} disabled={state.isLoading}>
          <Card className="shadow-sm">
             <Card.Body>
-               <FormText
-                  label="Nama Layanan"
-                  name="nama"
-                  errors={state.errors}
-                  onChange={(e) => setState({ ...state, input: { ...state.input, nama: e.target.value } })}
-                  value={state.input.nama || ""}
-               />
-               <FormTextarea
-                  label="Keterangan Layanan"
-                  name="keterangan"
-                  errors={state.errors}
-                  onChange={(e) => setState({ ...state, input: { ...state.input, keterangan: e.target.value } })}
-                  value={state.input.keterangan || ""}
-               />
+               <Row>
+                  <FormText
+                     label="Nama Layanan"
+                     name="nama"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, nama: e.target.value } })}
+                     value={state.input.nama || ""}
+                     col={{ md: 12, sm: 12 }}
+                  />
+               </Row>
+               <Row>
+                  <FormTextarea
+                     label="Keterangan Layanan"
+                     name="keterangan"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, keterangan: e.target.value } })}
+                     value={state.input.keterangan || ""}
+                     col={{ md: 12, sm: 12 }}
+                  />
+               </Row>
             </Card.Body>
             <Card.Footer>
                <Button variant="primary" className="fw-bold" size="sm" type="submit" disabled={state.isLoading}>

@@ -1,4 +1,3 @@
-"use client";
 import Editor from "@/components/TinyMCEEditor";
 import { setModule } from "@/redux";
 import { DropzoneUpload, FormText, FormTypeaheadMultiple, get, post } from "@helpers";

@@ -1,19 +1,21 @@
-import { FloatingLabel, Form } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 
 export default function FormText({ ...config }) {
-   const { label } = config;
+   const { label, name, errors, value, onChange, col } = config;
 
    return (
-      <FloatingLabel label={label} className="mb-3" controlId={normalizeText(config.name)}>
+      <Col xs={12} className="mb-2" {...col}>
+         <Form.Label htmlFor={normalizeText(name)}>{label}</Form.Label>
          <Form.Control
+            id={normalizeText(name)}
             type="text"
-            placeholder={label}
-            isInvalid={checkIsInvalid(config.name, config.errors)}
-            onChange={config.onChange}
-            value={config.value}
+            placeholder="Ketikkan disini..."
+            isInvalid={checkIsInvalid(name, errors)}
+            onChange={onChange}
+            value={value}
          />
-         <Form.Control.Feedback type="invalid">{config.errors[config.name]}</Form.Control.Feedback>
-      </FloatingLabel>
+         <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>
+      </Col>
    );
 }
 

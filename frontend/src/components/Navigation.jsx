@@ -88,8 +88,21 @@ const Navigation = () => {
                      onMouseEnter={handleMouseEnter}
                      onMouseLeave={handleMouseLeave}
                      renderMenuOnMount>
-                     <NavDropdown.Item href="/action1">alkwhfklwjheafkawjef</NavDropdown.Item>
+                     <Link to="/tentang/profil" className="dropdown-item">
+                        Profil
+                     </Link>
+                     <Link to="/tentang/strukturorganisasi" className="dropdown-item">
+                        Struktur Organisasi
+                     </Link>
+                     <Link to="/tentang/sekretariat" className="dropdown-item">
+                        Sekretariat
+                     </Link>
                   </NavDropdown>
+                  <Nav.Item as="li">
+                     <Link to="/kemitraan" className="nav-link">
+                        Kemitraan
+                     </Link>
+                  </Nav.Item>
                </Nav>
             </Navbar.Collapse>
             <div className="w-100 w-lg-auto d-none d-lg-flex">

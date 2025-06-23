@@ -1,10 +1,14 @@
 import { setModule } from "@/redux";
-import { DropzoneUpload, FormDatePicker, FormSelect, FormText, FormTypeahead, get, post } from "@helpers";
-import { useEffect, useState } from "react";
+import { CSpinner } from "@coreui/react";
+import { DropzoneUpload, FormSelect, FormText, FormTypeahead, get, post } from "@helpers";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+
+const RuangLingkup = React.lazy(() => import("./RuangLingkup"));
+const TanggalKerjasama = React.lazy(() => import("./TanggalKerjasama"));
 
 export default function Forms() {
    const { module, init } = useSelector((e) => e.redux);
@@ -52,14 +56,39 @@ export default function Forms() {
 
    useEffect(() => {
       loadDropdown();
+      return () => {};
+   }, []);
+
+   useEffect(() => {
       if (pageType === "update" && Object.keys(dataUpdate).length > 0 && !isLoadingGetDropdown) {
-         setState((prev) => ({ ...prev, input: dataUpdate }));
+         const bidang_kerjasama = JSON.parse(dataUpdate.bidang_kerjasama).map((item) => ({
+            ...item,
+            label: item.bidang_kerjasama,
+            value: item.id,
+         }));
+
+         const id_fakultas = JSON.parse(dataUpdate.id_fakultas).map((item) => ({
+            ...item,
+            label: item.fakultas,
+            value: item.id,
+         }));
+
+         const id_prodi = JSON.parse(dataUpdate.id_prodi).map((item) => ({
+            ...item,
+            label: item.prodi,
+            value: item.id,
+         }));
+
          setState((prev) => ({
             ...prev,
+            input: dataUpdate,
             selectedDropdown: {
                ...prev.selectedDropdown,
                id_mou: filterByValue(state.dropdown.daftarMoU, dataUpdate.id_mou),
-               id_lembaga: filterByValue(state.dropdown.daftarLembaga, dataUpdate.id_lembaga),
+               id_mitra: filterByValue(state.dropdown.daftarMitra, dataUpdate.id_mitra),
+               bidang_kerjasama,
+               id_fakultas,
+               id_prodi,
             },
          }));
       }
@@ -85,18 +114,18 @@ export default function Forms() {
 
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const formData = { pageType, user_modified: init.user_modified };
+      const formData = { pageType };
       Object.keys(state.input).forEach((key) => (formData[key] = state.input[key]));
 
-      post("/mitra/submit", formData, { headers: { ...init.token } })
+      post("/mitra/submit", formData)
          .then((res) => {
             const { data } = res;
 
             setState((prev) => ({ ...prev, errors: data.errors }));
 
             if (data.status) {
-               clearState();
                toast.success(data.message);
+               clearState();
             } else {
                toast.error(data.message);
             }
@@ -106,20 +135,20 @@ export default function Forms() {
          });
    };
 
-   const handleChangeDropdown = (data, name) => {
-      if (data.length > 0) {
-         setState((prev) => ({
-            ...prev,
-            input: { ...prev.input, [name]: data[0].value },
-            selectedDropdown: { ...state.selectedDropdown, [name]: data },
-         }));
+   const handleChangeDropdown = (data, name, isMultiple = false) => {
+      let dataValue = [];
+      if (isMultiple) {
+         dataValue = data.length > 0 ? JSON.stringify(data) : "";
       } else {
-         setState((prev) => ({
-            ...prev,
-            input: { ...prev.input, [name]: "" },
-            selectedDropdown: { ...state.selectedDropdown, [name]: [] },
-         }));
+         dataValue = data.length > 0 ? data[0].value : "";
       }
+      const dataSelected = data.length > 0 ? data : [];
+
+      setState((prev) => ({
+         ...prev,
+         input: { ...prev.input, [name]: dataValue },
+         selectedDropdown: { ...state.selectedDropdown, [name]: dataSelected },
+      }));
    };
 
    const getSelectedDropdown = (name) => {
@@ -134,12 +163,25 @@ export default function Forms() {
       setState((prev) => ({ ...prev, input: { ...prev.input, nama_dokumen, file_mou: file } }));
    };
 
-   return (
-      <Form onSubmit={handleSubmit} disabled={state.isLoading}>
-         <Card className="shadow-sm">
-            <Card.Body>
-               <Row>
-                  <Col md={3} sm={12}>
+   const props = { state, setState, getSelectedDropdown, handleChangeDropdown };
+
+   return isLoadingGetDropdown ? (
+      <CSpinner color="primary" />
+   ) : (
+      <React.Suspense fallback={<CSpinner color="primary" />}>
+         <Form onSubmit={handleSubmit} disabled={state.isLoading}>
+            <Card className="shadow-sm">
+               <Card.Body>
+                  <Row>
+                     <FormText
+                        label="Judul Kegiatan"
+                        name="judul_kegiatan"
+                        errors={state.errors}
+                        onChange={(e) => setState({ ...state, input: { ...state.input, judul_kegiatan: e.target.value } })}
+                        value={state.input.judul_kegiatan || ""}
+                     />
+                  </Row>
+                  <Row>
                      <FormTypeahead
                         name="id_mou"
                         label="MoU"
@@ -147,39 +189,27 @@ export default function Forms() {
                         selected={getSelectedDropdown("id_mou")}
                         onChange={(item) => handleChangeDropdown(item, "id_mou")}
                         errors={state.errors}
+                        col={{ md: 3 }}
                      />
-                  </Col>
-                  <Col>
-                     <FormText
+                     <FormTypeahead
+                        name="id_mitra"
                         label="Nama Mitra"
-                        name="nama_mitra"
+                        options={state.dropdown.daftarMitra}
+                        selected={getSelectedDropdown("id_mitra")}
+                        onChange={(item) => handleChangeDropdown(item, "id_mitra")}
                         errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, nama_mitra: e.target.value } })}
-                        value={state.input.nama_mitra || ""}
+                        col={{ md: 9 }}
                      />
-                  </Col>
-               </Row>
-               <Row>
-                  <Col md={3} sm={12}>
+                  </Row>
+                  <Row>
                      <FormText
                         label="Nomor Dokumen/Perjanjian"
                         name="nomor_dokumen"
                         errors={state.errors}
                         onChange={(e) => setState({ ...state, input: { ...state.input, nomor_dokumen: e.target.value } })}
                         value={state.input.nomor_dokumen || ""}
+                        col={{ md: 3 }}
                      />
-                  </Col>
-                  <Col md={3} sm={12}>
-                     <FormTypeahead
-                        name="id_lembaga"
-                        label="Lembaga"
-                        options={state.dropdown.daftarLembaga}
-                        selected={getSelectedDropdown("id_lembaga")}
-                        onChange={(item) => handleChangeDropdown(item, "id_lembaga")}
-                        errors={state.errors}
-                     />
-                  </Col>
-                  <Col md={3} sm={12}>
                      <FormSelect
                         name="id_jenis_mou"
                         label="Jenis MoU"
@@ -187,80 +217,38 @@ export default function Forms() {
                         errors={state.errors}
                         onChange={(e) => setState({ ...state, input: { ...state.input, id_jenis_mou: e.target.value } })}
                         value={state.input.id_jenis_mou || ""}
+                        col={{ md: 3 }}
                      />
-                  </Col>
-               </Row>
-               <Row>
-                  <h5>Tanggal Kerjasama</h5>
-                  <Col md={2} sm={12}>
-                     <FormDatePicker
-                        label="Tanggal Mulai"
-                        name="tanggal_mulai"
-                        errors={state.errors}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, tanggal_mulai: e.target.value } })}
-                        value={state.input.tanggal_mulai || ""}
-                     />
-                  </Col>
-                  <Col md={2} sm={12}>
-                     <FormSelect
-                        name="durasi"
-                        label="Durasi"
-                        options={[
-                           { label: "Sampai Dengan", value: "sampai-dengan" },
-                           { label: "Tak Terbatas", value: "tak-terbatas" },
-                        ]}
-                        errors={state.errors}
-                        onChange={(e) =>
-                           setState({
-                              ...state,
-                              input: {
-                                 ...state.input,
-                                 durasi: e.target.value,
-                                 tanggal_berakhir: e.target.value === "tak-terbatas" ? "" : state.input.tanggal_berakhir,
-                              },
-                           })
-                        }
-                        value={state.input.durasi || ""}
-                     />
-                  </Col>
-                  {state.input.durasi === "sampai-dengan" && (
+                  </Row>
+                  <TanggalKerjasama {...props} />
+                  <RuangLingkup {...props} />
+                  <Row className="justify-content-md-center mt-3">
+                     <h5>Dokumen</h5>
+                     <Col md={12}>
+                        <DropzoneUpload onFileSelect={handleFile} />
+                     </Col>
                      <Col md={2} sm={12}>
-                        <FormDatePicker
-                           label="Tanggal Berakhir"
-                           name="tanggal_berakhir"
+                        <FormSelect
+                           label="Status Dokumen"
+                           name="status_dokumen"
                            errors={state.errors}
-                           onChange={(e) => setState({ ...state, input: { ...state.input, tanggal_berakhir: e.target.value } })}
-                           value={state.input.tanggal_berakhir || ""}
+                           options={[
+                              { value: "public", label: "Public" },
+                              { value: "private", label: "Private" },
+                           ]}
+                           value={state.input.status_dokumen || ""}
+                           onChange={(e) => setState({ ...state, input: { ...state.input, status_dokumen: e.target.value } })}
                         />
                      </Col>
-                  )}
-               </Row>
-               <Row className="justify-content-md-center">
-                  <h5>Dokumen</h5>
-                  <Col md={12}>
-                     <DropzoneUpload onFileSelect={handleFile} existsFileName={"awjefhgakwjhgfkwef"} />
-                  </Col>
-                  <Col md={2} sm={12}>
-                     <FormSelect
-                        label="Status Dokumen"
-                        name="status_dokumen"
-                        errors={state.errors}
-                        options={[
-                           { value: "public", label: "Public" },
-                           { value: "private", label: "Private" },
-                        ]}
-                        value={state.input.status_dokumen || ""}
-                        onChange={(e) => setState({ ...state, input: { ...state.input, status_dokumen: e.target.value } })}
-                     />
-                  </Col>
-               </Row>
-            </Card.Body>
-            <Card.Footer>
-               <Button variant="primary" className="fw-bold" size="sm" type="submit" disabled={state.isLoading}>
-                  {state.isLoading ? "Loading..." : `Simpan`}
-               </Button>
-            </Card.Footer>
-         </Card>
-      </Form>
+                  </Row>
+               </Card.Body>
+               <Card.Footer>
+                  <Button variant="primary" className="fw-bold" size="sm" type="submit" disabled={state.isLoading}>
+                     {state.isLoading ? "Loading..." : `Simpan`}
+                  </Button>
+               </Card.Footer>
+            </Card>
+         </Form>
+      </React.Suspense>
    );
 }

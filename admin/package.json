@@ -4,7 +4,7 @@
    "scripts": {
       "build:scss": "sass --load-path=node_modules src/scss/style.scss:src/scss/style.css",
       "build:tinymce": "node ./postinstall.js",
-      "dev": "esbuild ./src/index.jsx --bundle --watch --alias:@=./src/ --alias:@components=./src/components/ --alias:@helpers=./src/helpers --outdir=./bundle --loader:.css=css --loader:.svg=dataurl --loader:.webp=dataurl --loader:.eot=copy --loader:.png=dataurl --loader:.jpg=dataurl --loader:.woff=copy --loader:.woff2=copy --loader:.scss=file --loader:.ttf=copy --sourcemap --log-limit=0 --jsx=automatic --inject:./process-shim.js",
+      "dev": "esbuild --define:process.env.NODE_ENV=\\\"development\\\" ./src/index.jsx --bundle --sourcemap --jsx=automatic --alias:@=./src/ --alias:@components=./src/components/ --alias:@helpers=./src/helpers --loader:.css=css --loader:.svg=dataurl --loader:.webp=dataurl --loader:.eot=dataurl --loader:.png=dataurl --loader:.jpg=dataurl --loader:.woff=dataurl --loader:.woff2=dataurl --loader:.scss=dataurl --loader:.ttf=dataurl --outdir=./bundle --servedir=./ --watch --serve-fallback=index.html",
       "clean": "node clean.js",
       "build": "npm run clean && node esbuild.config.js && node prod.js"
    },
@@ -25,6 +25,7 @@
       "core-js": "^3.42.0",
       "gridjs": "^6.2.0",
       "html-entities": "^2.6.0",
+      "jose": "^6.0.11",
       "keycloak-js": "^26.2.0",
       "moment": "^2.30.1",
       "react": "^19.1.0",

@@ -27,13 +27,23 @@ const _nav = [
          },
          {
             component: CNavItem,
-            name: "MoU",
+            name: "Naskah Kerjasama",
             href: "/referensi/mou",
          },
          {
             component: CNavItem,
             name: "Lembaga",
             href: "/referensi/lembaga",
+         },
+         {
+            component: CNavItem,
+            name: "Mitra",
+            href: "/referensi/mitra",
+         },
+         {
+            component: CNavItem,
+            name: "Bidang Kerja Sama",
+            href: "/referensi/bidangkerjasama",
          },
       ],
    },
@@ -65,6 +75,12 @@ const _nav = [
       component: CNavItem,
       name: "Mitra",
       href: "/mitra",
+      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+   },
+   {
+      component: CNavItem,
+      name: "Implementasi",
+      href: "/implementasi",
       icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
    },
    {

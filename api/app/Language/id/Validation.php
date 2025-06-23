@@ -57,7 +57,7 @@ return [
    'valid_emails'          => '{field} harus berisi semua alamat email yang valid.',
    'valid_ip'              => '{field} harus berisi IP yang valid.',
    'valid_url'             => '{field} harus berisi URL yang valid.',
-   'valid_date'            => '{field} tanggal tidak valid.',
+   'valid_date'            => '{field} tidak valid.',
 
    // Credit Cards
    'valid_cc_num'          => '{field} tampaknya bukan nomor kartu kredit yang valid.',

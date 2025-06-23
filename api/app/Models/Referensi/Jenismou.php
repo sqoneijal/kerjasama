@@ -2,10 +2,10 @@
 
 namespace App\Models\Referensi;
 
+use App\Models\Common;
 use CodeIgniter\Database\RawSql;
-use CodeIgniter\Model;
 
-class Jenismou extends Model
+class Jenismou extends Common
 {
 
    public function hapus(array $post): array

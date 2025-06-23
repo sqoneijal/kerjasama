@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import keycloakInstance from "./keycloak";
 
 export const post = async (url, form = [], config = {}) => {
    try {
@@ -23,7 +24,23 @@ export const post = async (url, form = [], config = {}) => {
       };
 
       await mutex.lock();
+
+      // 🔁 Periksa dan perbarui token jika perlu
+      if (keycloakInstance?.token && keycloakInstance.isTokenExpired()) {
+         keycloakInstance.updateToken(999_999_999_999); // perbarui token jika tinggal <30s
+         config.headers = {
+            ...(config.headers || {}),
+            Authorization: `Bearer ${keycloakInstance.refreshToken}`,
+         };
+      } else {
+         config.headers = {
+            ...(config.headers || {}),
+            Authorization: `Bearer ${keycloakInstance.token}`,
+         };
+      }
+
       const formData = new FormData();
+      formData.append("user_modified", keycloakInstance.userInfo.preferred_username);
       Object.keys(form).forEach((data) => formData.append(data, form[data]));
 
       const send = axios.post(`${window.apiUrl}${url}`, formData, { ...config, signal: abortSignal(200_000) });

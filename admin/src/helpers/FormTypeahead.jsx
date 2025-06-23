@@ -1,42 +1,23 @@
 import { useRef } from "react";
-import { FloatingLabel, Form } from "react-bootstrap";
-import { Hint, Typeahead } from "react-bootstrap-typeahead";
+import { Col, Form } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 export default function FormTypeahead({ ...config }) {
    const typeaheadRef = useRef(null);
-   const { label, errors, name } = config;
+   const { label, errors, name, col } = config;
 
    return (
-      <Typeahead
-         ref={typeaheadRef}
-         id={normalizeText(label)}
-         placeholder={label}
-         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
-            const { placeholder, value, onChange } = inputProps;
-
-            return (
-               <Hint>
-                  <FloatingLabel controlId={inputProps.id} label={inputProps.placeholder} className="form-label mb-3" style={{ width: "100%" }}>
-                     <Form.Control
-                        type="text"
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={onChange}
-                        ref={(node) => {
-                           inputRef(node);
-                           referenceElementRef(node);
-                        }}
-                        isInvalid={checkIsInvalid(name, errors)}
-                        onClick={() => typeaheadRef.current?.toggleMenu()}
-                     />
-                     <Form.Label htmlFor={inputProps.id}>{inputProps.placeholder}</Form.Label>
-                     <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>
-                  </FloatingLabel>
-               </Hint>
-            );
-         }}
-         {...config}
-      />
+      <Col className="mb-2" {...col} xs={12}>
+         <Form.Label htmlFor={normalizeText(label)}>{label}</Form.Label>
+         <Typeahead
+            ref={typeaheadRef}
+            id={normalizeText(label)}
+            placeholder="Ketikkan disini..."
+            isInvalid={checkIsInvalid(name, errors)}
+            {...config}
+         />
+         <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>
+      </Col>
    );
 }
 

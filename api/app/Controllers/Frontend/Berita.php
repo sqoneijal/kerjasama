@@ -13,4 +13,11 @@ class Berita extends BaseController
       $content = $model->getDetailBerita($slug);
       return $this->respondCreated($content);
    }
+
+   public function getData()
+   {
+      $model = new Model();
+      $content = $model->getData($this->request->getGet());
+      return $this->respondCreated($content);
+   }
 }

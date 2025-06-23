@@ -84,7 +84,7 @@ export default function MitraPage() {
 
    const renderStatus = (row) => {
       if (row.is_tak_terhingga === "t") {
-         return `Masih Berjalan`;
+         return `Aktif`;
       }
 
       const awal = moment(row.tanggal_mulai);
@@ -92,11 +92,11 @@ export default function MitraPage() {
 
       const diff = akhir.diff(awal, "days");
       if (diff < 0) {
-         return `Sudah Berakhir`;
+         return `Tidak Aktif`;
       } else if (diff <= 30) {
          return `Akan Berakhir ${diff} Hari Lagi`;
       } else {
-         return `Masih Berjalan`;
+         return `Aktif`;
       }
    };
 
@@ -127,18 +127,22 @@ export default function MitraPage() {
       const grid = new Grid({
          columns: [
             {
-               name: "MoU",
+               name: "Judul Kegiatan",
                data: (row) => {
                   const dataJson = row ? encodeURIComponent(JSON.stringify(row)) : "";
 
                   return html(
-                     `<strong>${row.mou}</strong>
+                     `<strong>${row.judul_kegiatan}</strong>
                      <div class="row-actions">
                         <span class="edit"><a href="" id="edit" data-json='${dataJson}'>Edit</a> | </span>
                         <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
                      </div>`
                   );
                },
+            },
+            {
+               name: "MoU",
+               data: (row) => row.mou,
             },
             {
                name: "Mitra",
