@@ -12,6 +12,15 @@ use Google\Service\Drive\DriveFile as Google_Service_Drive_DriveFile;
 class Mitra extends BaseController
 {
 
+   public function detail()
+   {
+      if ($this->request->is('post')) {
+         $model = new Model();
+         $content = $model->getDetail($this->request->getPost());
+         return $this->respondCreated($content);
+      }
+   }
+
    public function hapus()
    {
       if ($this->request->is('post')) {

@@ -23,6 +23,7 @@
       "@tinymce/tinymce-react": "^6.1.0",
       "axios": "^1.9.0",
       "core-js": "^3.42.0",
+      "dompurify": "^3.2.6",
       "gridjs": "^6.2.0",
       "html-entities": "^2.6.0",
       "jose": "^6.0.11",

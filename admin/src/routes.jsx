@@ -24,6 +24,7 @@ const TentangSekretariat = React.lazy(() => import("./views/tentang/Sekretariat"
 // Mitra
 const Mitra = React.lazy(() => import("./views/mitra/Page"));
 const MitraForms = React.lazy(() => import("./views/mitra/Forms"));
+const MitraDetail = React.lazy(() => import("./views/mitra/detail/Page"));
 
 // Berita
 const Berita = React.lazy(() => import("./views/berita/dalamnegeri/Page"));
@@ -57,6 +58,7 @@ const routes = [
    { path: "/tentang/sekretariat", name: "Sekretariat", element: TentangSekretariat },
    { path: "/mitra", name: "Mitra", element: Mitra },
    { path: "/mitra/forms", name: "Forms", element: MitraForms },
+   { path: "/mitra/detail/:id", name: "Detail", element: MitraDetail },
    { path: "/berita", name: "Berita", element: Berita },
    { path: "/berita/dalamnegeri", name: "Dalam Negeri", element: BeritaDalamNegeri },
    { path: "/berita/dalamnegeri/forms", name: "Forms", element: BeritaDalamNegeriForms },

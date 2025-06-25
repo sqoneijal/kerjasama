@@ -63,6 +63,11 @@ export default function MitraPage() {
    };
 
    const handleClick = (e) => {
+      if (e.target.matches("#judul_kegiatan")) {
+         e.preventDefault();
+         navigate(`/mitra/detail/${e.target.dataset.id}`);
+      }
+
       if (e.target.matches("#edit")) {
          handleEdit(e);
       }
@@ -132,7 +137,7 @@ export default function MitraPage() {
                   const dataJson = row ? encodeURIComponent(JSON.stringify(row)) : "";
 
                   return html(
-                     `<strong>${row.judul_kegiatan}</strong>
+                     `<strong><a href="#" style="text-decoration: none;" id="judul_kegiatan" data-id="${row.id}">${row.judul_kegiatan}</a></strong>
                      <div class="row-actions">
                         <span class="edit"><a href="" id="edit" data-json='${dataJson}'>Edit</a> | </span>
                         <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
