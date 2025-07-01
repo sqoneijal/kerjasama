@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Title = React.lazy(() => import("./Title"));
+const Content = React.lazy(() => import("./Content"));
 
 const Page = () => {
    const { module } = useSelector((e) => e.redux);
@@ -33,6 +34,7 @@ const Page = () => {
    ) : (
       <React.Suspense fallback={<PageSuspense />}>
          <Title />
+         <Content />
       </React.Suspense>
    );
 };

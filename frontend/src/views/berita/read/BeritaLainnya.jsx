@@ -73,49 +73,6 @@ const BeritaLainnya = () => {
                ))}
             </Swiper>
          </div>
-
-         <div className="post-footer">
-            <div className="row thm-margin">
-               <div className="col-md-8 thm-padding">
-                  <a href="#" className="more-btn">
-                     More popular posts
-                  </a>
-               </div>
-               <div className="col-md-4 d-md-block d-none thm-padding">
-                  <div className="social">
-                     <ul>
-                        <li>
-                           <div className="share transition">
-                              <a href="#" target="_blank" className="ico fb">
-                                 <i className="fab fa-facebook-f"></i>
-                              </a>
-                              <a href="#" target="_blank" className="ico tw">
-                                 <i className="fab fa-twitter"></i>
-                              </a>
-                              <a href="#" target="_blank" className="ico rs">
-                                 <i className="fas fa-rss"></i>
-                              </a>
-                              <a href="#" target="_blank" className="ico pin">
-                                 <i className="fab fa-pinterest-p"></i>
-                              </a>
-                              <i className="ti-share ico-share"></i>
-                           </div>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <i className="ti-heart"></i>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <i className="ti-twitter"></i>
-                           </a>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </div>
       </div>
    );
 };
