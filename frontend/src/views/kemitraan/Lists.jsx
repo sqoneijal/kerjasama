@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const DataUmum = React.lazy(() => import("./DataUmum"));
 const RuangLingkup = React.lazy(() => import("./RuangLingkup"));
 const IdentitasMitra = React.lazy(() => import("./IdentitasMitra"));
+const Implementasi = React.lazy(() => import("./Implementasi"));
 
 const Lists = () => {
    const { module } = useSelector((e) => e.redux);
@@ -32,6 +33,7 @@ const Lists = () => {
                         <DataUmum {...row} />
                         <RuangLingkup {...row} />
                         <IdentitasMitra {...row} />
+                        <Implementasi {...row} />
                      </Accordion.Body>
                   </Accordion.Item>
                )}

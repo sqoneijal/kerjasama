@@ -38,8 +38,30 @@ class Kemitraan extends Common
          } else {
             $response[$key]['id_dokumen'] = $val['id_dokumen'];
          }
+
+         $response[$key]['implementasi'] = $this->getImplementasiMitra($val['id']);
       }
 
+      return $response;
+   }
+
+   private function getImplementasiMitra(int $id_mitra): array
+   {
+      $table = $this->db->table('tb_implementasi ti');
+      $table->select('ti.id, ti.dilakukan, ti.tgl_pelaksanaan, ti.capaian_output, ti.status_evaluasi, ti.dokumentasi_pendukung');
+      $table->where('ti.id_mitra', $id_mitra);
+
+      $get = $table->get();
+      $result = $get->getResultArray();
+      $fieldNames = $get->getFieldNames();
+      $get->freeResult();
+
+      $response = [];
+      foreach ($result as $key => $val) {
+         foreach ($fieldNames as $field) {
+            $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
+         }
+      }
       return $response;
    }
 
