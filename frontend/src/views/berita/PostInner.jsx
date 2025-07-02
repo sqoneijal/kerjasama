@@ -73,7 +73,7 @@ const PostInner = () => {
    return pageLoading ? (
       <PageSuspense />
    ) : (
-      <Col sm={7} md={8} className="col-p main-content">
+      <Col sm={12} md={12} className="col-p main-content">
          <div className="post-inner">
             <div className="post-body">
                <Each
