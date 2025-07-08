@@ -174,7 +174,7 @@ export default function Forms() {
                <Card.Body>
                   <Row>
                      <FormText
-                        label="Judul Kegiatan"
+                        label="Judul Nota Kesepahaman"
                         name="judul_kegiatan"
                         errors={state.errors}
                         onChange={(e) => setState({ ...state, input: { ...state.input, judul_kegiatan: e.target.value } })}
@@ -184,7 +184,7 @@ export default function Forms() {
                   <Row>
                      <FormTypeahead
                         name="id_mou"
-                        label="MoU"
+                        label="Naskah Kerjasama"
                         options={state.dropdown.daftarMoU}
                         selected={getSelectedDropdown("id_mou")}
                         onChange={(item) => handleChangeDropdown(item, "id_mou")}

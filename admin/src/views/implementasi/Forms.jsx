@@ -134,9 +134,19 @@ const Forms = () => {
          <Card className="shadow-sm">
             <Card.Body>
                <Row>
+                  <FormText
+                     label="Judul Kegiatan"
+                     name="judul_kegiatan"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, judul_kegiatan: e.target.value } })}
+                     value={state.input.judul_kegiatan || ""}
+                  />
+                  {/* tambahkan bentuk implementasi/tindak lanjut */}
+               </Row>
+               <Row>
                   <FormTypeahead
                      name="id_mitra"
-                     label="Kegiatan"
+                     label="Rujukan Kerjasama"
                      options={state.dropdown.daftarMitra}
                      selected={getSelectedDropdown("id_mitra")}
                      onChange={(item) => handleChangeDropdown(item, "id_mitra")}
@@ -170,7 +180,7 @@ const Forms = () => {
                      <Editor onInit={(_evt, editor) => (dilakukan.current = editor)} initialValue={state?.input?.dilakukan} />
                   </Col>
                   <Col>
-                     <Form.Label>Capaian Output</Form.Label>
+                     <Form.Label>Capaian Output dan Review Manfaat Kerjasama</Form.Label>
                      <Editor onInit={(_evt, editor) => (capaian_output.current = editor)} initialValue={state?.input?.capaian_output} />
                   </Col>
                </Row>

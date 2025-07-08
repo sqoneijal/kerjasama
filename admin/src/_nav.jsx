@@ -45,6 +45,11 @@ const _nav = [
             name: "Bidang Kerja Sama",
             href: "/referensi/bidangkerjasama",
          },
+         {
+            component: CNavItem,
+            name: "Bentuk Tindak Lanjut",
+            href: "/referensi/tindaklanjut",
+         },
       ],
    },
    {
@@ -79,7 +84,7 @@ const _nav = [
    },
    {
       component: CNavItem,
-      name: "Implementasi",
+      name: "Tindak Lanjut",
       href: "/implementasi",
       icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
    },
