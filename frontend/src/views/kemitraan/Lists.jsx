@@ -1,6 +1,7 @@
 import { Each, PageSuspense } from "@helpers";
+import moment from "moment";
 import React from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Tab, Tabs } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const DataUmum = React.lazy(() => import("./DataUmum"));
@@ -19,26 +20,61 @@ const Lists = () => {
       return `${trimmed.slice(0, lastSpace)}...`;
    };
 
+   const renderStatus = (row) => {
+      if (row.is_tak_terhingga === "t") {
+         return `Aktif`;
+      }
+
+      const awal = moment();
+      const akhir = moment(row.tanggal_berakhir);
+
+      const diff = akhir.diff(awal, "days");
+      if (diff < 0) {
+         return `Tidak Aktif`;
+      } else if (diff <= 30) {
+         return `Akan Berakhir ${diff} Hari Lagi`;
+      } else {
+         return `Aktif`;
+      }
+   };
+
+   const getTahunPerjanjian = (tanggal) => {
+      return moment(tanggal).format("YYYY");
+   };
+
    return (
       <React.Suspense fallback={<PageSuspense />}>
-         <Accordion>
-            <Each
-               of={data}
-               render={(row, index) => (
-                  <Accordion.Item eventKey={row.id} key={row.id}>
-                     <Accordion.Header className="fw-bold">
-                        {index + 1}. {potongString(row.mitra_nama, 80)}
-                     </Accordion.Header>
-                     <Accordion.Body>
-                        <DataUmum {...row} />
-                        <RuangLingkup {...row} />
-                        <IdentitasMitra {...row} />
-                        <Implementasi {...row} />
-                     </Accordion.Body>
-                  </Accordion.Item>
-               )}
-            />
-         </Accordion>
+         <div className="tabs-wrapper">
+            <Tabs fill={false}>
+               {data.daftarJenisMoU.map((row) => {
+                  return (
+                     <Tab eventKey={row.label} title={row.label} key={row.value}>
+                        <Accordion>
+                           <Each
+                              of={data.content.filter((e) => e.id_jenis_mou === row.value)}
+                              render={(row, index) => (
+                                 <Accordion.Item eventKey={row.id} key={row.id}>
+                                    <Accordion.Header>
+                                       <span className="fw-bold">
+                                          {index + 1}. {potongString(row.mitra_nama, 80)} | {getTahunPerjanjian(row.tanggal_mulai)} |{" "}
+                                          <span className="text-primary">{renderStatus(row)}</span>
+                                       </span>
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                       <DataUmum {...row} />
+                                       <RuangLingkup {...row} />
+                                       <IdentitasMitra {...row} />
+                                       <Implementasi {...row} />
+                                    </Accordion.Body>
+                                 </Accordion.Item>
+                              )}
+                           />
+                        </Accordion>
+                     </Tab>
+                  );
+               })}
+            </Tabs>
+         </div>
       </React.Suspense>
    );
 };

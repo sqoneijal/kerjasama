@@ -11,7 +11,8 @@ class Kemitraan extends Common
    public function getData(): array
    {
       $table = $this->db->table('tb_mitra tm');
-      $table->select('tm.id, tm.id_jenis_mou, tm.id_mou, tm.nomor_dokumen, tm.tanggal_mulai, tm.tanggal_berakhir, tm.is_tak_terhingga, tm.id_dokumen, tm.status_dokumen, tm.nama_dokumen, tm.id_mitra, tm.durasi, tm.judul_kegiatan, tmm.nama as mou, coalesce(trl2.data, ARRAY[]::text[]) as bidang_kerjasama, trl.tingkat, trl.tujuan_kerjasama, trl.unit_penanggung_jawab, coalesce(trl3.data, ARRAY[]::text[]) as fakultas, coalesce(trl4.data, ARRAY[]::text[]) as prodi, tmm2.nama as mitra_nama, tml.nama as mitra_lembaga, tmm2.asal_mitra as mitra_asal, tmm2.alamat as mitra_alamat, tmm2.website as mitra_website');
+      $table->select('tm.id, tm.id_jenis_mou, tm.id_mou, tm.nomor_dokumen, tm.tanggal_mulai, tm.tanggal_berakhir, tm.is_tak_terhingga, tm.id_dokumen, tm.status_dokumen, tm.nama_dokumen, tm.id_mitra, tm.durasi, tm.judul_kegiatan, tmm.nama as mou, coalesce(trl2.data, ARRAY[]::text[]) as bidang_kerjasama, trl.tingkat, trl.tujuan_kerjasama, trl.unit_penanggung_jawab, coalesce(trl3.data, ARRAY[]::text[]) as fakultas, coalesce(trl4.data, ARRAY[]::text[]) as prodi, tmm2.nama as mitra_nama, tml.nama as mitra_lembaga, tmm2.asal_mitra as mitra_asal, tmm2.alamat as mitra_alamat, tmm2.website as mitra_website, tmjm.nama as jenis_mou');
+      $table->join('tb_mst_jenis_mou tmjm', 'tmjm.id = tm.id_jenis_mou');
       $table->join('tb_mst_mou tmm', 'tmm.id = tm.id_mou');
       $table->join('tb_ruang_lingkup trl', 'trl.id_mitra = tm.id', 'left');
       $table->join('(' . new RawSql($this->prepareQueryBidangKerjasama()) . ') trl2', 'trl2.id_mitra = tm.id', 'left');
@@ -42,7 +43,10 @@ class Kemitraan extends Common
          $response[$key]['implementasi'] = $this->getImplementasiMitra($val['id']);
       }
 
-      return $response;
+      return [
+         'daftarJenisMoU' => $this->getDaftarJenisMoU(),
+         'content' => $response,
+      ];
    }
 
    private function getImplementasiMitra(int $id_mitra): array

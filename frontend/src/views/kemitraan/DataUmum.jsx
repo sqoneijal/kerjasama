@@ -7,7 +7,7 @@ const DataUmum = ({ ...data }) => {
          return `Aktif`;
       }
 
-      const awal = moment(row.tanggal_mulai);
+      const awal = moment();
       const akhir = moment(row.tanggal_berakhir);
 
       const diff = akhir.diff(awal, "days");
