@@ -21,7 +21,7 @@ class Kemitraan extends Common
       $table->join('tb_mst_mitra tmm2', 'tmm2.id = tm.id_mitra', 'left');
       $table->join('tb_mst_lembaga tml', 'tml.id = tmm2.id_lembaga', 'left');
       $table->where('tm.judul_kegiatan !=', '-');
-      $table->orderBy('tm.id', 'desc');
+      $table->orderBy('tm.tanggal_mulai', 'desc');
 
       $get = $table->get();
       $result = $get->getResultArray();
