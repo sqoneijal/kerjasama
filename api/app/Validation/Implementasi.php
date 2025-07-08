@@ -20,6 +20,14 @@ class Implementasi
             'rules' => 'required',
             'label' => 'Status evaluasi'
          ],
+         'bentuk_tindak_lanjut_id' => [
+            'rules' => 'required|numeric',
+            'label' => 'Bentuk tindak lanjut'
+         ],
+         'judul_kegiatan' => [
+            'rules' => 'required',
+            'label' => 'Judul kegiatan'
+         ]
       ];
    }
 }

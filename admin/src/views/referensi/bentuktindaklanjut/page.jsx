@@ -2,26 +2,39 @@ import { setModule } from "@/redux";
 import { decodeJWT, post } from "@helpers";
 import { Grid, html } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
-import moment from "moment";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-moment.locale("id");
 
-export default function Page() {
-   const { module, init } = useSelector((e) => e.redux);
-   const dispatch = useDispatch();
+const Page = () => {
+   const { init, module } = useSelector((e) => e.redux);
    const gridWrapper = useRef(null);
+   const dispatch = useDispatch();
    const gridRef = useRef(null);
    const navigate = useNavigate();
+
+   useEffect(() => {
+      dispatch(
+         setModule({
+            pageType: "",
+            dataUpdate: {},
+            pageButton: {
+               variant: "primary",
+               label: "Tambah Data",
+               href: "/referensi/tindaklanjut/forms",
+            },
+         })
+      );
+      return () => {};
+   }, []);
 
    const handleEdit = (e) => {
       e.preventDefault();
       const json = e.target.dataset.json;
       dispatch(setModule({ ...module, pageType: "update", dataUpdate: decodeJWT(json) }));
-      navigate("/implementasi/forms");
+      navigate("/referensi/tindaklanjut/forms");
    };
 
    const reloadGrid = () => {
@@ -57,7 +70,7 @@ export default function Page() {
          confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
          if (result.isConfirmed) {
-            const res = await post("/implementasi/hapus", { id }, { headers: { ...init.token } });
+            const res = await post("/referensi/tindaklanjut/hapus", { id }, { headers: { ...init.token } });
             processDeleteResponse(res);
          }
       });
@@ -77,26 +90,14 @@ export default function Page() {
       handleDelete(id);
    };
 
-   useLayoutEffect(() => {
-      dispatch(
-         setModule({
-            pageType: "",
-            dataUpdate: {},
-            pageButton: {
-               variant: "primary",
-               label: "Tambah Data",
-               href: "/implementasi/forms",
-            },
-         })
-      );
-
+   useEffect(() => {
       const grid = new Grid({
          columns: [
             {
-               name: "Kegiatan",
+               name: "Nama",
                data: (row) => {
                   return html(
-                     `<strong>${row.judul_kegiatan}</strong>
+                     `<strong>${row.nama}</strong>
                      <div class="row-actions">
                         <span class="edit"><a href="" id="edit" data-json="${row.jwt}">Edit</a> | </span>
                         <span class="trash"><a href="" id="hapus" data-id="${row.id}">Hapus</a></span>
@@ -104,53 +105,14 @@ export default function Page() {
                   );
                },
             },
-            {
-               name: "Mitra",
-               data: (row) => {
-                  return html(
-                     `${row.nama}<br/>${row.nomor_dokumen}<br/><a href="${row.path_dokumen}" target="_blank" style="font-size: 12px;">${row.nama_dokumen}</a>`
-                  );
-               },
-            },
-            {
-               name: "Tanggal Pelaksanaan",
-               data: (row) => moment(row.tgl_pelaksanaan).format("DD MMMM YYYY"),
-            },
-            {
-               name: "Status Evaluasi",
-               data: (row) => {
-                  const statusEvaluasi = {
-                     sudah: "Sudah Evaluasi",
-                     belum: "Belum Evaluasi",
-                  };
-                  return statusEvaluasi[row.status_evaluasi];
-               },
-            },
+            { name: "Keterangan", data: (row) => row.keterangan },
          ],
          server: {
-            url: `${window.apiUrl}/implementasi/getdata`,
-            then: (data) => data.results,
+            url: `${window.apiUrl}/referensi/tindaklanjut/getdata`,
+            then: (data) => data,
             headers: { ...init.token },
          },
-         search: {
-            server: {
-               url: (prev, keyword) => {
-                  const separator = prev.includes("?") ? "&" : "?";
-                  return `${prev}${separator}search=${keyword}`;
-               },
-               headers: { ...init.token },
-            },
-         },
-         pagination: {
-            limit: 10,
-            server: {
-               url: (prev, page, limit) => {
-                  const separator = prev.includes("?") ? "&" : "?";
-                  return `${prev}${separator}limit=${limit}&offset=${page * limit}`;
-               },
-               headers: { ...init.token },
-            },
-         },
+         search: false,
       });
 
       if (gridWrapper.current) {
@@ -166,4 +128,5 @@ export default function Page() {
    }, []);
 
    return <div ref={gridWrapper} />;
-}
+};
+export default Page;

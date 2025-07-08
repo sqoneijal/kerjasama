@@ -16,6 +16,26 @@ class Common extends Model
         $this->db = \Config\Database::connect();
     }
 
+    public function getDaftarBentukTindakLanjut(): array
+    {
+        $table = $this->db->table('tb_mst_bentuk_tindak_lanjut');
+        $table->select('id as value, nama as label');
+        $table->orderBy('nama');
+
+        $get = $table->get();
+        $result = $get->getResultArray();
+        $fieldNames = $get->getFieldNames();
+        $get->freeResult();
+
+        $response = [];
+        foreach ($result as $key => $val) {
+            foreach ($fieldNames as $field) {
+                $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
+            }
+        }
+        return $response;
+    }
+
     public function validateUser(array $post): bool
     {
         $table = $this->db->table('tb_users');

@@ -353,7 +353,7 @@ class Mitra extends Common
 
    private function searchData($table, array $post)
    {
-      $column_search = ['tmm.nama', 'tmm2.nama', 'tml.nama', 'tm.nomor_dokumen'];
+      $column_search = ['tmm.nama', 'tmm2.nama', 'tml.nama', 'tm.nomor_dokumen', 'tm.judul_kegiatan'];
 
       $i = 0;
       foreach ($column_search as $item) {

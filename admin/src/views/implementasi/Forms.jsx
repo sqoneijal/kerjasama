@@ -1,7 +1,7 @@
 import Editor from "@/components/TinyMCEEditor";
 import { setModule } from "@/redux";
 import { CSpinner } from "@coreui/react";
-import { FormDatePicker, FormSelect, FormTypeahead, get, post } from "@helpers";
+import { DropzoneUpload, FormDatePicker, FormSelect, FormText, FormTypeahead, get, post } from "@helpers";
 import { decode } from "html-entities";
 import { useEffect, useRef, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
@@ -25,7 +25,10 @@ const Forms = () => {
       selectedDropdown: [],
       input: {},
       errors: {},
+      isLoading: false,
    });
+
+   const { isLoadingDropdown, isSubmit, isLoading } = state;
 
    const clearState = () => {
       setState({ isSubmit: false, isLoadingDropdown: true, dropdown: {}, selectedDropdown: [], input: {}, errors: {} });
@@ -127,10 +130,15 @@ const Forms = () => {
          });
    };
 
-   return state.isLoadingDropdown ? (
+   const handleFile = (file) => {
+      const nama_dokumen = file ? file.name : "";
+      setState((prev) => ({ ...prev, input: { ...prev.input, nama_dokumen, dokumen: file } }));
+   };
+
+   return isLoadingDropdown ? (
       <CSpinner color="primary" />
    ) : (
-      <Form disabled={state.isSubmit} onSubmit={handleSubmit}>
+      <Form disabled={isSubmit} onSubmit={handleSubmit}>
          <Card className="shadow-sm">
             <Card.Body>
                <Row>
@@ -139,9 +147,18 @@ const Forms = () => {
                      name="judul_kegiatan"
                      errors={state.errors}
                      onChange={(e) => setState({ ...state, input: { ...state.input, judul_kegiatan: e.target.value } })}
-                     value={state.input.judul_kegiatan || ""}
+                     value={state?.input?.judul_kegiatan || ""}
+                     col={{ md: 9 }}
                   />
-                  {/* tambahkan bentuk implementasi/tindak lanjut */}
+                  <FormSelect
+                     label="Bentuk Tindak Lanjut"
+                     name="bentuk_tindak_lanjut_id"
+                     errors={state.errors}
+                     onChange={(e) => setState({ ...state, input: { ...state.input, bentuk_tindak_lanjut_id: e.target.value } })}
+                     value={state?.input?.bentuk_tindak_lanjut_id || ""}
+                     options={state?.dropdown?.daftarBentukTindakLanjut}
+                     col={{ md: 3 }}
+                  />
                </Row>
                <Row>
                   <FormTypeahead
@@ -184,16 +201,21 @@ const Forms = () => {
                      <Editor onInit={(_evt, editor) => (capaian_output.current = editor)} initialValue={state?.input?.capaian_output} />
                   </Col>
                </Row>
-               <Row className="mt-2">
+               <Row>
                   <Col>
                      <Form.Label>Dokumentasi Pendukung</Form.Label>
                      <Editor onInit={(_evt, editor) => (dokumentasi_pendukung.current = editor)} initialValue={state?.input?.dokumentasi_pendukung} />
                   </Col>
                </Row>
+               <Row>
+                  <Col className="mt-2">
+                     <DropzoneUpload onFileSelect={handleFile} />
+                  </Col>
+               </Row>
             </Card.Body>
             <Card.Footer>
-               <Button variant="primary" className="fw-bold" size="sm" type="submit" disabled={state.isLoading}>
-                  {state.isLoading ? "Loading..." : `Simpan`}
+               <Button variant="primary" className="fw-bold" size="sm" type="submit" disabled={isLoading}>
+                  {isLoading ? "Loading..." : `Simpan`}
                </Button>
             </Card.Footer>
          </Card>

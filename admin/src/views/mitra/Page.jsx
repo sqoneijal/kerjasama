@@ -132,7 +132,7 @@ export default function MitraPage() {
       const grid = new Grid({
          columns: [
             {
-               name: "Judul Kegiatan",
+               name: "Judul Nota Kesepahaman",
                data: (row) => {
                   const dataJson = row ? encodeURIComponent(JSON.stringify(row)) : "";
 

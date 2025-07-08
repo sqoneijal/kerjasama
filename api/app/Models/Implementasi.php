@@ -23,6 +23,7 @@ class Implementasi extends Common
    {
       return [
          'daftarMitra' => $this->getDaftarMitra(),
+         'daftarBentukTindakLanjut' => $this->getDaftarBentukTindakLanjut(),
       ];
    }
 
@@ -49,7 +50,7 @@ class Implementasi extends Common
    public function submit(array $post): array
    {
       try {
-         $fields = ['tgl_pelaksanaan', 'id_mitra', 'status_evaluasi'];
+         $fields = ['tgl_pelaksanaan', 'id_mitra', 'status_evaluasi', 'judul_kegiatan', 'bentuk_tindak_lanjut_id', 'nama_dokumen', 'id_dokumen', 'path_dokumen'];
          foreach ($fields as $field) {
             if (@$post[$field]) {
                $data[$field] = $post[$field];
@@ -83,7 +84,7 @@ class Implementasi extends Common
    public function getData(array $post): array
    {
       $table = $this->db->table('tb_implementasi ti');
-      $table->select('ti.*, tm.judul_kegiatan, tmm.nama, tm.nomor_dokumen, tm.id_mitra, tm.id_dokumen');
+      $table->select('ti.*, tmm.nama, tm.nomor_dokumen, tm.id_mitra, ti.id_dokumen');
       $table->join('tb_mitra tm', 'tm.id = ti.id_mitra');
       $table->join('tb_mst_mitra tmm', 'tmm.id = tm.id_mitra');
       $this->searchData($table, $post);
@@ -112,7 +113,7 @@ class Implementasi extends Common
 
    private function searchData($table, array $post)
    {
-      $column_search = ['tmm.nama', 'tmm2.nama', 'tml.nama', 'tm.nomor_dokumen'];
+      $column_search = ['tmm.nama', 'tmm2.nama', 'tml.nama', 'tm.nomor_dokumen', 'ti.judul_kegiatan'];
 
       $i = 0;
       foreach ($column_search as $item) {

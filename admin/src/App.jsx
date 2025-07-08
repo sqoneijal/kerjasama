@@ -23,11 +23,12 @@ const App = () => {
 
    useEffect(() => {
       initKeycloak().then((res) => {
-         if (res) {
-            const { keycloak, user } = res;
-            validateUserLogin(user);
-            dispatch(setInit({ user, user_modified: user.preferred_username, token: { Authorization: `Bearer ${keycloak.token}` } }));
+         if (!res) {
+            return;
          }
+         const { keycloak, user } = res;
+         validateUserLogin(user);
+         dispatch(setInit({ user, user_modified: user.preferred_username, token: { Authorization: `Bearer ${keycloak.token}` } }));
       });
    }, []);
 
