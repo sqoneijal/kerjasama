@@ -75,6 +75,8 @@ const Forms = () => {
                status_evaluasi: dataUpdate.status_evaluasi,
                dokumentasi_pendukung: decode(dataUpdate.dokumentasi_pendukung),
                id_mitra: dataUpdate.id_mitra,
+               judul_kegiatan: dataUpdate.judul_kegiatan,
+               bentuk_tindak_lanjut_id: dataUpdate.bentuk_tindak_lanjut_id,
             },
             selectedDropdown: {
                id_mitra: [{ value: dataUpdate.id_mitra, label: `${dataUpdate.judul_kegiatan} - ${dataUpdate.nama} (${dataUpdate.nomor_dokumen})` }],

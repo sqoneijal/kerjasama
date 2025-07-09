@@ -406,26 +406,6 @@ class Mitra extends Common
       return $response;
    }
 
-   private function getDaftarJenisMou(): array
-   {
-      $table = $this->db->table('tb_mst_jenis_mou');
-      $table->select('id as value, nama as label');
-      $table->orderBy('nama');
-
-      $get = $table->get();
-      $result = $get->getResultArray();
-      $fieldNames = $get->getFieldNames();
-      $get->freeResult();
-
-      $response = [];
-      foreach ($result as $key => $val) {
-         foreach ($fieldNames as $field) {
-            $response[$key][$field] = $val[$field] ? trim($val[$field]) : (string) $val[$field];
-         }
-      }
-      return $response;
-   }
-
    private function getDaftarMoU(): array
    {
       $table = $this->db->table('tb_mst_mou');
