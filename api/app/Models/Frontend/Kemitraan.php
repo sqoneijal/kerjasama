@@ -52,7 +52,8 @@ class Kemitraan extends Common
    private function getImplementasiMitra(int $id_mitra): array
    {
       $table = $this->db->table('tb_implementasi ti');
-      $table->select('ti.id, ti.dilakukan, ti.tgl_pelaksanaan, ti.capaian_output, ti.status_evaluasi, ti.dokumentasi_pendukung');
+      $table->select('ti.id, ti.dilakukan, ti.tgl_pelaksanaan, ti.capaian_output, ti.status_evaluasi, ti.dokumentasi_pendukung, ti.id_mitra, ti.judul_kegiatan, ti.bentuk_tindak_lanjut_id, ti.nama_dokumen, ti.path_dokumen, ti.judul_kegiatan, tmbtl.nama as bentuk_tindak_lanjut');
+      $table->join('tb_mst_bentuk_tindak_lanjut tmbtl', 'tmbtl.id = ti.bentuk_tindak_lanjut_id', 'left');
       $table->where('ti.id_mitra', $id_mitra);
 
       $get = $table->get();

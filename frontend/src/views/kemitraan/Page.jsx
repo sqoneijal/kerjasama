@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Title = React.lazy(() => import("./Title"));
 const Content = React.lazy(() => import("./Content"));
+const DetailTindakLanjut = React.lazy(() => import("./detailTindakLanjut"));
 
 const Page = () => {
    const { module } = useSelector((e) => e.redux);
@@ -35,6 +36,7 @@ const Page = () => {
       <React.Suspense fallback={<PageSuspense />}>
          <Title />
          <Content />
+         <DetailTindakLanjut />
       </React.Suspense>
    );
 };

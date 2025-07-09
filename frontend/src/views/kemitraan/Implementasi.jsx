@@ -1,50 +1,70 @@
+import { setModule } from "@/redux";
 import { Each } from "@helpers";
-import DOMPurify from "dompurify";
-import { decode } from "html-entities";
 import moment from "moment";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 const Implementasi = ({ ...data }) => {
    const { implementasi } = data;
+   const { module } = useSelector((e) => e.redux);
+   const dispatch = useDispatch();
 
    const statusEvaluasi = {
       sudah: "Sudah Evaluasi",
       belum: "Belum Evaluasi",
    };
 
+   const handleClickDetailTindakLanjut = (row) => {
+      dispatch(setModule({ ...module, detailTindakLanjut: row }));
+   };
+
    return (
       <Row>
          <Col xs={12}>
             <fieldset>
-               <legend>Implementasi</legend>
-               <Each
-                  of={implementasi}
-                  render={(row, index) => (
-                     <Row key={row.id}>
-                        <Col sm={6}>
-                           <h6>Tanggal Pelaksanaan</h6>
-                           <p>{moment(row.tgl_pelaksanaan).format("DD-MM-YYYY")}</p>
-                        </Col>
-                        <Col sm={6}>
-                           <h6>Status Evaluasi</h6>
-                           <p>{statusEvaluasi[row.status_evaluasi]}</p>
-                        </Col>
-                        <Col xs={12}>
-                           <h6>Kegiatan yang Sudah Dilakukan</h6>
-                           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(row.dilakukan), { format: "html5" }) }} />
-                        </Col>
-                        <Col xs={12}>
-                           <h6>Capaian Output</h6>
-                           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(row.capaian_output), { format: "html5" }) }} />
-                        </Col>
-                        <Col xs={12}>
-                           <h6>Dokumentasi Pendukung</h6>
-                           <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(row.dokumentasi_pendukung), { format: "html5" }) }} />
-                        </Col>
-                        {index % 2 === 0 && <hr />}
-                     </Row>
-                  )}
-               />
+               <legend>Tindak Lanjut</legend>
+               <Table size="sm">
+                  <thead>
+                     <tr>
+                        <th className="text-center">No</th>
+                        <th style={{ textAlign: "left" }}>Judul Kegiatan</th>
+                        <th style={{ textAlign: "left" }}>Bentuk Tindak Lanjut</th>
+                        <th style={{ textAlign: "left" }}>Tanggal Pelaksanaan</th>
+                        <th style={{ textAlign: "left" }}>Status Evaluasi</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {implementasi.length > 0 ? (
+                        <Each
+                           of={implementasi}
+                           render={(row, index) => (
+                              <tr key={row.id}>
+                                 <td className="text-center">{index + 1}</td>
+                                 <td>
+                                    <a
+                                       href="#"
+                                       onClick={(e) => {
+                                          e.preventDefault();
+                                          handleClickDetailTindakLanjut(row);
+                                       }}>
+                                       {row.judul_kegiatan}
+                                    </a>
+                                 </td>
+                                 <td>{row.bentuk_tindak_lanjut}</td>
+                                 <td>{moment(row.tgl_pelaksanaan).format("DD-MM-YYYY")}</td>
+                                 <td>{statusEvaluasi[row.status_evaluasi]}</td>
+                              </tr>
+                           )}
+                        />
+                     ) : (
+                        <tr>
+                           <td className="text-center" colSpan={5}>
+                              Belum ada tindak lanjut
+                           </td>
+                        </tr>
+                     )}
+                  </tbody>
+               </Table>
             </fieldset>
          </Col>
       </Row>
