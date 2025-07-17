@@ -61,11 +61,8 @@ class Mitra extends BaseController
 
             $file_mou = $this->request->getFile('file_mou');
             if ($file_mou) {
-               $driveUpload = $this->handleUploadToGoogleDrive($file_mou, url_title($post['id_mitra'], '-', true));
-               if ($driveUpload) {
-                  $post['id_dokumen'] = $driveUpload->id;
-                  $post['nama_dokumen'] = $file_mou->getClientName();
-               }
+               $post['nama_dokumen'] = $file_mou->getClientName();
+               $post['dokumen_path'] = cdn_upload($file_mou, url_title($post['id_mitra'], '-', true));
             }
 
             $model = new Model();
@@ -78,79 +75,5 @@ class Mitra extends BaseController
          }
          return $this->respond($response);
       }
-   }
-
-   private function handleUploadToGoogleDrive($file, $namaFolder)
-   {
-      $upload_path = WRITEPATH . 'uploads';
-      $getRandomName = $file->getRandomName();
-      $file->move($upload_path, $getRandomName);
-
-      $parentId = '11ZMJOvtfH27rsdmZFpuSeixB9c1mxzve';
-
-      $client = new Google_Client();
-      $client->setAuthConfig(WRITEPATH . 'google-service.json');
-      $client->addScope(Google_Service_Drive::DRIVE);
-
-      $driveService = new Google_Service_Drive($client);
-
-      $driveFile = new Google_Service_Drive_DriveFile();
-      $endPointFolder = $this->cariFolderGoogleDrive($driveService, $namaFolder, $parentId);
-
-      if ($endPointFolder === null) {
-         $endPointFolder = $this->buatFolderGoogleDrive($driveService, $namaFolder, $parentId);
-      }
-
-      $driveFile->setName($file->getClientName());
-      $driveFile->setParents([$endPointFolder]);
-
-      $submitUpload = $driveService->files->create($driveFile, array(
-         'data' => file_get_contents($upload_path . '/' . $getRandomName),
-         'mimeType' => $file->getClientMimeType(),
-         'uploadType' => 'multipart'
-      ));
-
-      @unlink($upload_path . '/' . $getRandomName);
-
-      return $submitUpload;
-   }
-
-   private function cariFolderGoogleDrive($service, $folderName, $parentId = null)
-   {
-      $query = "name = '$folderName' and mimeType = 'application/vnd.google-apps.folder' and trashed = false";
-
-      if ($parentId) {
-         $query .= " and '$parentId' in parents";
-      }
-
-      $response = $service->files->listFiles(array(
-         'q' => $query,
-         'spaces' => 'drive',
-         'fields' => 'files(id, name)'
-      ));
-
-      if (count($response->files) > 0) {
-         return $response->files[0]->id;
-      } else {
-         return null;
-      }
-   }
-
-   private function buatFolderGoogleDrive($service, $folderName, $parentId = null)
-   {
-      $fileMetadata = new Google_Service_Drive_DriveFile(array(
-         'name' => $folderName,
-         'mimeType' => 'application/vnd.google-apps.folder'
-      ));
-
-      if ($parentId) {
-         $fileMetadata->setParents(array($parentId));
-      }
-
-      $folder = $service->files->create($fileMetadata, array(
-         'fields' => 'id'
-      ));
-
-      return $folder->id;
    }
 }

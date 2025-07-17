@@ -104,7 +104,7 @@ class Mitra extends Common
    public function submit(array $post): array
    {
       try {
-         $fields = ['id_jenis_mou', 'id_mou', 'id_mitra', 'nomor_dokumen', 'tanggal_mulai', 'tanggal_berakhir', 'is_tak_terhingga', 'id_dokumen', 'status_dokumen', 'nama_dokumen', 'durasi', 'judul_kegiatan'];
+         $fields = ['id_jenis_mou', 'id_mou', 'id_mitra', 'nomor_dokumen', 'tanggal_mulai', 'tanggal_berakhir', 'is_tak_terhingga', 'status_dokumen', 'nama_dokumen', 'durasi', 'judul_kegiatan', 'dokumen_path'];
          foreach ($fields as $field) {
             if (@$post[$field]) {
                $data[$field] = $post[$field];

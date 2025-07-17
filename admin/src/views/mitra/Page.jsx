@@ -108,11 +108,7 @@ export default function MitraPage() {
    const renderNomor = (row) => {
       return `
          ${row.nomor_dokumen}
-         ${
-            row.nama_dokumen
-               ? `<br /><a href="https://drive.google.com/file/d/${row.id_dokumen}/view?usp=drive_link" target="_blank" style="font-size: 12px;">${row.nama_dokumen}</a>`
-               : ""
-         }
+         ${row.nama_dokumen ? `<br /><a href="${row.dokumen_path}" target="_blank" style="font-size: 12px;">${row.nama_dokumen}</a>` : ""}
          `;
    };
 
