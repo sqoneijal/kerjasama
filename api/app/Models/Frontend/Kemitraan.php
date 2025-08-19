@@ -18,7 +18,7 @@ class Kemitraan extends Common
       $table->join('(' . new RawSql($this->prepareQueryBidangKerjasama()) . ') trl2', 'trl2.id_mitra = tm.id', 'left');
       $table->join('(' . new RawSql($this->prepareQueryFakultas()) . ') trl3', 'trl3.id_mitra = tm.id', 'left');
       $table->join('(' . new RawSql($this->prepareQueryProdi()) . ') trl4', 'trl4.id_mitra = tm.id', 'left');
-      $table->join('tb_mst_mitra tmm2', 'tmm2.id = tm.id_mitra', 'left');
+      $table->join('tb_mst_mitra tmm2', 'tmm2.id = tm.id_mitra');
       $table->join('tb_mst_lembaga tml', 'tml.id = tmm2.id_lembaga', 'left');
       $table->where('tm.judul_kegiatan !=', '-');
       $table->orderBy('tm.tanggal_mulai', 'desc');

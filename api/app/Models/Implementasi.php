@@ -65,7 +65,7 @@ class Implementasi extends Common
          $data['dokumentasi_pendukung'] = htmlentities($post['dokumentasi_pendukung']);
 
          $table = $this->db->table('tb_implementasi');
-         if ($post['pageType'] === 'update') {
+         if (@$post['id']) {
             $data['update_at'] = new RawSql('now()');
 
             $table->where('id', $post['id']);
