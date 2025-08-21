@@ -61,12 +61,9 @@ const Navigation = () => {
             <Navbar.Collapse ref={navbarCollapse}>
                <div className="align-items-center border-bottom d-flex d-lg-none justify-content-between mb-3 navbar-collapse__header pb-3">
                   <div className="collapse-brand flex-shrink-0">
-                     <a href="index.html">
-                        <img src="https://theme.easital.com/html/inews/v3.2/assets/images/logo.png" className="header-logo_dark" alt="" />
-                     </a>
-                     <a href="index.html">
-                        <img src="https://theme.easital.com/html/inews/v3.2/assets/images/logo-white.png" className="header-logo_white" alt="" />
-                     </a>
+                     <Link to="/">
+                        <LogoUIN />
+                     </Link>
                   </div>
                   <div className="flex-grow-1 ms-3 text-end">
                      <button type="button" className="bg-transparent border-0 collapse-close p-0 position-relative" onClick={collapseClose}>
@@ -78,7 +75,7 @@ const Navigation = () => {
                <Nav as="ul">
                   <Nav.Item as="li">
                      <Link to="/" className="nav-link">
-                        Beranda
+                        Kemitraan
                      </Link>
                   </Nav.Item>
                   <NavDropdown
@@ -99,8 +96,8 @@ const Navigation = () => {
                      </Link>
                   </NavDropdown>
                   <Nav.Item as="li">
-                     <Link to="/kemitraan" className="nav-link">
-                        Kemitraan
+                     <Link to="/berita" className="nav-link">
+                        Berita
                      </Link>
                   </Nav.Item>
                </Nav>
